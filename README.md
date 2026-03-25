@@ -175,15 +175,33 @@ Für Tages-/Monats-/Jahresauswertungen in `configuration.yaml`:
 
 ```yaml
 utility_meter:
-  strom_bezug_tag:
+  # Bezug Hochtarif (HT)
+  strom_bezug_ht_tag:
     source: sensor.gplugd_energy_import_tariff_1
     cycle: daily
-  strom_bezug_monat:
+  strom_bezug_ht_monat:
     source: sensor.gplugd_energy_import_tariff_1
     cycle: monthly
-  strom_bezug_jahr:
+  strom_bezug_ht_jahr:
     source: sensor.gplugd_energy_import_tariff_1
     cycle: yearly
+  # Bezug Niedertarif (NT)
+  strom_bezug_nt_tag:
+    source: sensor.gplugd_energy_import_tariff_2
+    cycle: daily
+  strom_bezug_nt_monat:
+    source: sensor.gplugd_energy_import_tariff_2
+    cycle: monthly
+  strom_bezug_nt_jahr:
+    source: sensor.gplugd_energy_import_tariff_2
+    cycle: yearly
+  # Einspeisung (falls PV vorhanden)
+  strom_einspeisung_tag:
+    source: sensor.gplugd_energy_export_tariff_1
+    cycle: daily
+  strom_einspeisung_monat:
+    source: sensor.gplugd_energy_export_tariff_1
+    cycle: monthly
 ```
 
 **Wichtig:** `utility_meter:` darf in `configuration.yaml` nur einmal vorkommen. Falls der Key bereits existiert, die Einträge dort anhängen.
