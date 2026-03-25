@@ -6,7 +6,7 @@
  * Supports: DE, EN, FR, IT (fallback: EN)
  */
 
-const CARD_VERSION = "1.0.6";
+const CARD_VERSION = "1.0.8";
 
 const TRANSLATIONS = {
   en: {
