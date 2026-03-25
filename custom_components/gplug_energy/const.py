@@ -94,6 +94,55 @@ SENSOR_TYPES_ENERGY = {
         "state_class": "measurement",
         "icon": "mdi:flash-outline",
     },
+    # ── Leistung pro Phase ───────────────────────────────────────────────
+    "P1i": {
+        "name": "Bezugsleistung L1",
+        "name_en": "Power Import L1",
+        "unit": "W",
+        "device_class": "power",
+        "state_class": "measurement",
+        "icon": "mdi:flash",
+    },
+    "P2i": {
+        "name": "Bezugsleistung L2",
+        "name_en": "Power Import L2",
+        "unit": "W",
+        "device_class": "power",
+        "state_class": "measurement",
+        "icon": "mdi:flash",
+    },
+    "P3i": {
+        "name": "Bezugsleistung L3",
+        "name_en": "Power Import L3",
+        "unit": "W",
+        "device_class": "power",
+        "state_class": "measurement",
+        "icon": "mdi:flash",
+    },
+    "P1o": {
+        "name": "Einspeiseleistung L1",
+        "name_en": "Power Export L1",
+        "unit": "W",
+        "device_class": "power",
+        "state_class": "measurement",
+        "icon": "mdi:flash-outline",
+    },
+    "P2o": {
+        "name": "Einspeiseleistung L2",
+        "name_en": "Power Export L2",
+        "unit": "W",
+        "device_class": "power",
+        "state_class": "measurement",
+        "icon": "mdi:flash-outline",
+    },
+    "P3o": {
+        "name": "Einspeiseleistung L3",
+        "name_en": "Power Export L3",
+        "unit": "W",
+        "device_class": "power",
+        "state_class": "measurement",
+        "icon": "mdi:flash-outline",
+    },
     # ── Spannung pro Phase ────────────────────────────────────────────────
     "V1_32.7": {
         "name": "Spannung L1",
@@ -167,7 +216,25 @@ SENSOR_KEY_ALIASES = {
     "Power": "Pi_1.7",
     "Voltage": "V1_32.7",
     "Current": "I1_31.7",
+    # Short gPlug keys (as seen in real MQTT payloads)
+    "Pi": "Pi_1.7",
+    "Po": "Po_2.7",
+    "V1": "V1_32.7",
+    "V2": "V2_52.7",
+    "V3": "V3_72.7",
+    "I1": "I1_31.7",
+    "I2": "I2_51.7",
+    "I3": "I3_71.7",
+    "Ei": "Ei_1.8",
+    "Ei1": "Ei1_1.8.1",
+    "Ei2": "Ei2_1.8.2",
+    "Eo": "Eo_2.8",
+    "Eo1": "Eo1_2.8.1",
+    "Eo2": "Eo2_2.8.2",
 }
 
+# Keys to ignore (not useful as sensors)
+SENSOR_SKIP_KEYS = {"SMid", "Time"}
+
 # Known JSON prefixes used by gPlug Tasmota scripts
-KNOWN_JSON_PREFIXES = ["ENERGY", "SML", "P1", "DSMR", "HDLC"]
+KNOWN_JSON_PREFIXES = ["ENERGY", "SML", "P1", "DSMR", "HDLC", "z"]

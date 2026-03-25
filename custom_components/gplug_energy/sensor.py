@@ -40,6 +40,7 @@ from .const import (
     MANUFACTURER,
     MODEL_GPLUGD,
     SENSOR_KEY_ALIASES,
+    SENSOR_SKIP_KEYS,
     SENSOR_TYPES_ENERGY,
 )
 
@@ -116,6 +117,10 @@ async def _setup_mqtt_sensors(
 
         new_entities = []
         for key, value in sensor_data.items():
+            # Skip non-sensor keys
+            if key in SENSOR_SKIP_KEYS:
+                continue
+
             # Resolve alias to canonical key
             canonical_key = SENSOR_KEY_ALIASES.get(key, key)
             sensor_config = SENSOR_TYPES_ENERGY.get(canonical_key)
@@ -195,6 +200,9 @@ async def _setup_http_sensors(
 
         new_entities = []
         for key, value in sensor_data.items():
+            if key in SENSOR_SKIP_KEYS:
+                continue
+
             canonical_key = SENSOR_KEY_ALIASES.get(key, key)
             sensor_config = SENSOR_TYPES_ENERGY.get(canonical_key)
 
@@ -274,14 +282,17 @@ def _make_generic_sensor_config(key: str, value: Any) -> dict:
 
 def _build_device_info(config_entry: ConfigEntry, device_name: str) -> DeviceInfo:
     """Build the device info dict."""
-    return DeviceInfo(
+    info = DeviceInfo(
         identifiers={(DOMAIN, config_entry.entry_id)},
         name=device_name,
         manufacturer=MANUFACTURER,
         model=MODEL_GPLUGD,
         sw_version="Tasmota",
-        configuration_url=f"http://{config_entry.data.get(CONF_HTTP_HOST, '')}",
     )
+    http_host = config_entry.data.get(CONF_HTTP_HOST)
+    if http_host:
+        info["configuration_url"] = f"http://{http_host}"
+    return info
 
 
 class GPlugSensor(SensorEntity):
@@ -346,7 +357,7 @@ class GPlugSensor(SensorEntity):
         except (ValueError, TypeError):
             self._attr_native_value = value
 
-        if self.hass:
+        if self.hass and self.entity_id:
             self.async_write_ha_state()
 
     @property
