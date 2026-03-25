@@ -195,12 +195,19 @@ utility_meter:
   strom_bezug_nt_jahr:
     source: sensor.gplugd_energy_import_tariff_2
     cycle: yearly
-  # Einspeisung (falls PV vorhanden)
-  strom_einspeisung_tag:
+  # Einspeisung Hochtarif (HT)
+  strom_einspeisung_ht_tag:
     source: sensor.gplugd_energy_export_tariff_1
     cycle: daily
-  strom_einspeisung_monat:
+  strom_einspeisung_ht_monat:
     source: sensor.gplugd_energy_export_tariff_1
+    cycle: monthly
+  # Einspeisung Niedertarif (NT)
+  strom_einspeisung_nt_tag:
+    source: sensor.gplugd_energy_export_tariff_2
+    cycle: daily
+  strom_einspeisung_nt_monat:
+    source: sensor.gplugd_energy_export_tariff_2
     cycle: monthly
 ```
 
