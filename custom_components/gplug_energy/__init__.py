@@ -8,6 +8,7 @@ Home Assistant Energy Dashboard.
 
 from __future__ import annotations
 
+import json
 import logging
 from pathlib import Path
 
@@ -22,7 +23,11 @@ _LOGGER = logging.getLogger(__name__)
 
 PLATFORMS: list[Platform] = [Platform.SENSOR]
 
-CARD_URL = "/gplug_energy/gplug-energy-card.js"
+_MANIFEST_PATH = Path(__file__).parent / "manifest.json"
+_VERSION = json.loads(_MANIFEST_PATH.read_text()).get("version", "0.0.0")
+
+CARD_STATIC_URL = "/gplug_energy/gplug-energy-card.js"
+CARD_URL = f"{CARD_STATIC_URL}?v={_VERSION}"
 CARD_PATH = Path(__file__).parent / "www" / "gplug-energy-card.js"
 
 
@@ -68,29 +73,29 @@ async def async_update_options(hass: HomeAssistant, entry: ConfigEntry) -> None:
 
 async def _register_card(hass: HomeAssistant) -> None:
     """Register the gPlug Energy Lovelace card as a frontend resource."""
-    # Step 1: Serve the JS file via HTTP
+    # Step 1: Serve the JS file via HTTP (static path without query string)
     try:
         if hasattr(hass.http, "async_register_static_paths"):
             from homeassistant.components.http import StaticPathConfig
 
             await hass.http.async_register_static_paths(
-                [StaticPathConfig(CARD_URL, str(CARD_PATH), True)]
+                [StaticPathConfig(CARD_STATIC_URL, str(CARD_PATH), True)]
             )
         else:
-            hass.http.register_static_path(CARD_URL, str(CARD_PATH), cache_headers=True)
-        _LOGGER.info("gPlug card served at %s", CARD_URL)
+            hass.http.register_static_path(
+                CARD_STATIC_URL, str(CARD_PATH), cache_headers=True
+            )
+        _LOGGER.info("gPlug card served at %s", CARD_STATIC_URL)
     except Exception as exc:
         _LOGGER.warning("Could not serve card file: %s", exc)
         return
 
-    # Step 2: Register in Lovelace resources via storage
+    # Step 2: Register in Lovelace resources with version for cache busting
     await _add_lovelace_resource(hass, CARD_URL)
 
 
 async def _add_lovelace_resource(hass: HomeAssistant, url: str) -> None:
-    """Add a JS module to Lovelace resources using the HA storage API."""
-    import json
-
+    """Add or update a JS module in Lovelace resources (with version cache-bust)."""
     storage_path = Path(hass.config.path(".storage")) / "lovelace_resources"
 
     try:
@@ -102,13 +107,22 @@ async def _add_lovelace_resource(hass: HomeAssistant, url: str) -> None:
 
         items = data.get("data", {}).get("items", [])
 
-        # Check if already registered
+        # Check if already registered (match on base URL without ?v=)
         for item in items:
-            if url in item.get("url", ""):
-                _LOGGER.debug("gPlug card already in lovelace_resources")
+            existing_url = item.get("url", "")
+            if CARD_STATIC_URL in existing_url:
+                if existing_url == url:
+                    _LOGGER.debug("gPlug card already registered with current version")
+                    return
+                # Update version
+                item["url"] = url
+                data["data"]["items"] = items
+                content = json.dumps(data, indent=2)
+                await hass.async_add_executor_job(storage_path.write_text, content)
+                _LOGGER.info("gPlug card updated to %s", url)
                 return
 
-        # Find next ID
+        # Not found – add new entry
         existing_ids = [
             int(item.get("id", "0"))
             for item in items
@@ -116,11 +130,9 @@ async def _add_lovelace_resource(hass: HomeAssistant, url: str) -> None:
         ]
         next_id = str(max(existing_ids, default=0) + 1)
 
-        # Add the resource
         items.append({"id": next_id, "type": "module", "url": url})
         data["data"]["items"] = items
 
-        # Write back
         content = json.dumps(data, indent=2)
         await hass.async_add_executor_job(storage_path.write_text, content)
 
