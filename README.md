@@ -21,7 +21,15 @@
 | **Tarife** | Doppeltarif HT/NT (z.B. EWZ Zürich) |
 | **Phasen** | 3-Phasen: Spannung, Strom, Leistung (L1/L2/L3) |
 | **Smart Meter** | Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy |
-| **Sprachen** | DE / FR / EN |
+| **Sprachen** | DE / FR / EN / IT |
+
+---
+
+## Vorschau
+
+![gPlugD Energy Card](docs/card-preview.png)
+
+Die Lovelace-Karte zeigt Echtzeit-Bezug/Einspeisung, HT/NT-Zählerstände und 3-Phasen-Details. Registriert sich automatisch – kein manuelles Einrichten nötig.
 
 ---
 
