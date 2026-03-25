@@ -3,14 +3,14 @@
     "step": {
       "user": {
         "title": "gPlugD Energy – Verbindung",
-        "description": "Wählen Sie die Verbindungsart zu Ihrem gPlugD-Gerät.",
+        "description": "Verbindungsart zum gPlugD-Gerät wählen.",
         "data": {
           "connection_type": "Verbindungstyp"
         }
       },
       "mqtt": {
         "title": "gPlugD Energy – MQTT",
-        "description": "Geben Sie das MQTT Sensor-Topic Ihres gPlugD ein.\nTypisch: tele/ihr-gplug-topic/SENSOR\nPrüfen Sie die gPlugD Web-UI unter Information für das korrekte Topic.",
+        "description": "MQTT Sensor-Topic des gPlugD eingeben.\nTypisch: tele/ihr-gplugd-topic/SENSOR\nDas Topic finden Sie in der gPlugD Web-UI unter Information.",
         "data": {
           "device_name": "Gerätename",
           "mqtt_topic": "MQTT Sensor-Topic"
@@ -18,7 +18,7 @@
       },
       "http": {
         "title": "gPlugD Energy – HTTP",
-        "description": "Geben Sie die IP-Adresse oder den Hostnamen Ihres gPlugD-Geräts ein.",
+        "description": "IP-Adresse oder Hostname des gPlugD-Geräts eingeben.",
         "data": {
           "device_name": "Gerätename",
           "http_host": "IP-Adresse / Hostname",
@@ -28,7 +28,7 @@
     },
     "error": {
       "invalid_topic": "Ungültiges MQTT-Topic. Muss mindestens ein '/' enthalten.",
-      "invalid_host": "Bitte geben Sie eine gültige IP-Adresse oder einen Hostnamen ein."
+      "invalid_host": "Bitte eine gültige IP-Adresse oder einen Hostnamen eingeben."
     },
     "abort": {
       "already_configured": "Dieses gPlugD-Gerät ist bereits konfiguriert."
@@ -42,6 +42,30 @@
           "polling_interval": "Abfrageintervall (Sekunden)"
         }
       }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "energy_import_total": { "name": "Energiebezug Gesamt" },
+      "energy_import_tariff_1": { "name": "Energiebezug Tarif 1 (HT)" },
+      "energy_import_tariff_2": { "name": "Energiebezug Tarif 2 (NT)" },
+      "energy_export_total": { "name": "Energieeinspeisung Gesamt" },
+      "energy_export_tariff_1": { "name": "Energieeinspeisung Tarif 1 (HT)" },
+      "energy_export_tariff_2": { "name": "Energieeinspeisung Tarif 2 (NT)" },
+      "power_import": { "name": "Bezugsleistung" },
+      "power_export": { "name": "Einspeiseleistung" },
+      "power_import_l1": { "name": "Bezugsleistung L1" },
+      "power_import_l2": { "name": "Bezugsleistung L2" },
+      "power_import_l3": { "name": "Bezugsleistung L3" },
+      "power_export_l1": { "name": "Einspeiseleistung L1" },
+      "power_export_l2": { "name": "Einspeiseleistung L2" },
+      "power_export_l3": { "name": "Einspeiseleistung L3" },
+      "voltage_l1": { "name": "Spannung L1" },
+      "voltage_l2": { "name": "Spannung L2" },
+      "voltage_l3": { "name": "Spannung L3" },
+      "current_l1": { "name": "Strom L1" },
+      "current_l2": { "name": "Strom L2" },
+      "current_l3": { "name": "Strom L3" }
     }
   }
 }

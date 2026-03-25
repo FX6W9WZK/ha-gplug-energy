@@ -5,6 +5,18 @@ Alle relevanten Änderungen an der gPlugD Energy Integration werden in dieser Da
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/)
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [1.0.7] – 2026-03-25
+
+### Hinzugefügt
+- **Italienische Übersetzung** (it.json) – Config Flow, Sensornamen, Karten-UI
+- **Entity-Übersetzungen** in allen 4 Sprachen – Sensornamen werden in der HA-Sprache angezeigt (Energiebezug, Consommation, Consumo, Energy import)
+- **Lovelace-Karte mehrsprachig** – erkennt HA-Sprache automatisch (DE/EN/FR/IT)
+
+### Geändert
+- `strings.json` als Englisch-Fallback mit vollständigen Entity-Übersetzungen
+- Alle Übersetzungen überarbeitet und vereinheitlicht (DE, EN, FR, IT)
+- Lovelace-Karten-UI: Bezug/Einspeisung, Consommation/Injection, Consumo/Immissione
+
 ## [1.0.6] – 2026-03-25
 
 ### Geändert
@@ -73,6 +85,7 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 - gPlugD, gPlugD-E, gPlugE
 - Smart Meter: Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy
 
+[1.0.7]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.7
 [1.0.6]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.6
 [1.0.5]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.5
 [1.0.4]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.4

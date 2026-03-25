@@ -3,14 +3,14 @@
     "step": {
       "user": {
         "title": "gPlugD Energy – Connexion",
-        "description": "Choisissez le type de connexion à votre appareil gPlugD.",
+        "description": "Choisissez le type de connexion pour votre appareil gPlugD.",
         "data": {
           "connection_type": "Type de connexion"
         }
       },
       "mqtt": {
         "title": "gPlugD Energy – MQTT",
-        "description": "Entrez le topic MQTT de votre capteur gPlugD.\nTypiquement: tele/votre-topic-gplug/SENSOR\nVérifiez l'interface web gPlugD, rubrique Information, pour le topic correct.",
+        "description": "Entrez le topic MQTT du capteur gPlugD.\nTypiquement: tele/votre-topic-gplugd/SENSOR\nConsultez la rubrique Information de l'interface web gPlugD pour le topic correct.",
         "data": {
           "device_name": "Nom de l'appareil",
           "mqtt_topic": "Topic MQTT du capteur"
@@ -18,20 +18,20 @@
       },
       "http": {
         "title": "gPlugD Energy – HTTP",
-        "description": "Entrez l'adresse IP ou le nom d'hôte de votre appareil gPlugD.",
+        "description": "Entrez l'adresse IP ou le nom d'hote de votre appareil gPlugD.",
         "data": {
           "device_name": "Nom de l'appareil",
-          "http_host": "Adresse IP / nom d'hôte",
+          "http_host": "Adresse IP / nom d'hote",
           "polling_interval": "Intervalle d'interrogation"
         }
       }
     },
     "error": {
       "invalid_topic": "Topic MQTT invalide. Doit contenir au moins un '/'.",
-      "invalid_host": "Veuillez entrer une adresse IP ou un nom d'hôte valide."
+      "invalid_host": "Veuillez entrer une adresse IP ou un nom d'hote valide."
     },
     "abort": {
-      "already_configured": "Cet appareil gPlugDD est déjà configuré."
+      "already_configured": "Cet appareil gPlugD est deja configure."
     }
   },
   "options": {
@@ -42,6 +42,30 @@
           "polling_interval": "Intervalle d'interrogation (secondes)"
         }
       }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "energy_import_total": { "name": "Consommation totale" },
+      "energy_import_tariff_1": { "name": "Consommation tarif 1 (HP)" },
+      "energy_import_tariff_2": { "name": "Consommation tarif 2 (HC)" },
+      "energy_export_total": { "name": "Injection totale" },
+      "energy_export_tariff_1": { "name": "Injection tarif 1 (HP)" },
+      "energy_export_tariff_2": { "name": "Injection tarif 2 (HC)" },
+      "power_import": { "name": "Puissance consommee" },
+      "power_export": { "name": "Puissance injectee" },
+      "power_import_l1": { "name": "Puissance consommee L1" },
+      "power_import_l2": { "name": "Puissance consommee L2" },
+      "power_import_l3": { "name": "Puissance consommee L3" },
+      "power_export_l1": { "name": "Puissance injectee L1" },
+      "power_export_l2": { "name": "Puissance injectee L2" },
+      "power_export_l3": { "name": "Puissance injectee L3" },
+      "voltage_l1": { "name": "Tension L1" },
+      "voltage_l2": { "name": "Tension L2" },
+      "voltage_l3": { "name": "Tension L3" },
+      "current_l1": { "name": "Courant L1" },
+      "current_l2": { "name": "Courant L2" },
+      "current_l3": { "name": "Courant L3" }
     }
   }
 }
