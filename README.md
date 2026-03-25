@@ -1,7 +1,7 @@
 # gPlug Energy – Home Assistant Integration (HACS)
 
 [![HACS Badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz)
-[![Validate](https://github.com/gplug-energy/hacs-gplug-energy/actions/workflows/validate.yml/badge.svg)](https://github.com/gplug-energy/hacs-gplug-energy/actions)
+[![Validate](https://github.com/FX6W9WZK/ha-gplug-energy/actions/workflows/validate.yml/badge.svg)](https://github.com/FX6W9WZK/ha-gplug-energy/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 > **Vollwertige Home Assistant Integration für [gPlug](https://gplug.ch/) Smart-Meter-Sensoren (gPlugD, gPlugD-E, gPlugE) mit direkter Anbindung an das Energy Dashboard.**
@@ -45,7 +45,7 @@
 
 1. Öffne **HACS** in Home Assistant
 2. Klicke auf **⋮** (oben rechts) → **Benutzerdefinierte Repositories**
-3. URL eingeben: `https://github.com/gplug-energy/hacs-gplug-energy`
+3. URL eingeben: `https://github.com/FX6W9WZK/ha-gplug-energy`
 4. Kategorie: **Integration**
 5. **gPlug Energy** suchen und installieren
 6. Home Assistant neu starten
