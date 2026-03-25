@@ -1,4 +1,4 @@
-"""Auto-configure the Home Assistant Energy Dashboard for gPlugD sensors."""
+"""Auto-configure the Home Assistant Energy Dashboard for gPlug sensors."""
 
 from __future__ import annotations
 
@@ -30,7 +30,7 @@ async def async_configure_energy_dashboard(
     """Auto-configure sensors in the Energy Dashboard.
 
     Uses the flat grid-source format (one source per tariff).
-    Only runs once: if any gPlugD sensor is already present, it skips entirely.
+    Only runs once: if any gPlug sensor is already present, it skips entirely.
     """
     try:
         from homeassistant.components.energy import async_get_manager
@@ -57,7 +57,7 @@ async def async_configure_energy_dashboard(
             val = source.get(key, "") or ""
             if "gplug" in val:
                 _LOGGER.debug(
-                    "gPlugD sensor already in Energy Dashboard (%s), skipping", val
+                    "gPlug sensor already in Energy Dashboard (%s), skipping", val
                 )
                 return
 
@@ -99,16 +99,16 @@ async def async_configure_energy_dashboard(
         )
 
     if not new_sources:
-        _LOGGER.debug("No gPlugD energy sensors found yet, skipping auto-config")
+        _LOGGER.debug("No gPlug energy sensors found yet, skipping auto-config")
         return
 
-    # Merge: keep existing sources, append gPlugD sources
+    # Merge: keep existing sources, append gPlug sources
     merged = list(existing_sources) + new_sources
 
     try:
         await manager.async_update({"energy_sources": merged})
         _LOGGER.info(
-            "Auto-configured Energy Dashboard with %d gPlugD grid source(s): %s",
+            "Auto-configured Energy Dashboard with %d gPlug grid source(s): %s",
             len(new_sources),
             [s["stat_energy_from"] for s in new_sources],
         )

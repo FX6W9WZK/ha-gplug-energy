@@ -1,5 +1,5 @@
 {
-  "name": "gPlugD Energy (Smart Meter)",
+  "name": "gPlug Energy (Smart Meter)",
   "homeassistant": "2024.1.0",
   "render_readme": true
 }

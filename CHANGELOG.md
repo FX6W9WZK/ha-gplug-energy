@@ -1,9 +1,23 @@
 # Changelog
 
-Alle relevanten Änderungen an der gPlugD Energy Integration werden in dieser Datei dokumentiert.
+Alle relevanten Änderungen an der gPlug Energy Integration werden in dieser Datei dokumentiert.
 
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/)
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
+
+## [1.0.9] – 2026-03-26
+
+### Geändert
+- **Branding korrigiert**: Firma = gPlug, Produkte = gPlugD/gPlugD-E/gPlugM/gPlugK
+- Integrations-Name, Config Flow, Lovelace-Karte, Logs verwenden „gPlug" (Firma)
+- Produkt-spezifische Referenzen (MODEL, Gerätename, MQTT-Topic, Architektur) bleiben „gPlugD"
+- Repo-URL: `ha-gPlug-energy`
+
+## [1.0.8] – 2026-03-25
+
+### Geändert
+- Repo umbenannt auf `ha-gPlugD-energy` (wurde in v1.0.9 wieder korrigiert)
+- `CARD_VERSION` mit `manifest.json` Version synchronisiert
 
 ## [1.0.7] – 2026-03-25
 
@@ -20,7 +34,7 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 ## [1.0.6] – 2026-03-25
 
 ### Geändert
-- **Branding**: Alle Referenzen von „gPlug" auf „gPlugD" umgestellt (Firmenname ist gPlugD)
+- **Branding**: Alle Referenzen von „gPlug" auf korrekte Benennung umgestellt (Firma heisst gPlug, Produkte gPlugD/gPlugD-E/gPlugM/gPlugK)
 - Betrifft README, CHANGELOG, Config Flow, Übersetzungen (DE/FR/EN), Lovelace-Karte, HACS-Metadaten
 
 ## [1.0.5] – 2026-03-25
@@ -29,13 +43,13 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 - **Energy Dashboard Auto-Config komplett überarbeitet**: Verwendet jetzt das flache Grid-Format (ein Grid-Eintrag pro Tarif) statt `flow_from`/`flow_to` das bei vielen HA-Versionen Schema-Fehler verursachte
 - Jeder Tarif wird als eigener Grid-Eintrag angelegt: HT (0.27 CHF/kWh), NT (0.21 CHF/kWh)
 - Import und Export werden automatisch gepaart (HT↔HT, NT↔NT)
-- Duplikat-Prüfung: Läuft nur einmal, überspringt wenn bereits ein gPlugD-Sensor konfiguriert ist
+- Duplikat-Prüfung: Läuft nur einmal, überspringt wenn bereits ein gPlug-Sensor konfiguriert ist
 - Bestehende Energy-Quellen (z.B. Aqara-Geräte) bleiben erhalten
 
 ## [1.0.4] – 2026-03-25
 
 ### Behoben
-- **Keine Duplikate im Energy Dashboard**: Auto-Konfiguration prüft jetzt ob bereits gPlugD-Sensoren im Energy Dashboard vorhanden sind und überspringt in diesem Fall
+- **Keine Duplikate im Energy Dashboard**: Auto-Konfiguration prüft jetzt ob bereits gPlug-Sensoren im Energy Dashboard vorhanden sind und überspringt in diesem Fall
 - Verhindert `duplicate unique ID` Fehler bei HA-Neustart wenn Sensoren bereits manuell oder durch vorherigen Lauf konfiguriert wurden
 
 ## [1.0.3] – 2026-03-25
@@ -64,7 +78,7 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
 ### Hinzugefügt
 - Per-Phase Leistungssensoren: `P1i`/`P2i`/`P3i` und `P1o`/`P2o`/`P3o` (W)
-- Offizielle gPlugD Brand Assets (Logo, Icon)
+- Offizielle gPlug Brand Assets (Logo, Icon)
 
 ## [1.0.0] – 2026-03-25
 
@@ -85,11 +99,13 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 - gPlugD, gPlugD-E, gPlugE
 - Smart Meter: Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy
 
-[1.0.7]: https://github.com/FX6W9WZK/ha-gPlugD-energy/releases/tag/v1.0.7
-[1.0.6]: https://github.com/FX6W9WZK/ha-gPlugD-energy/releases/tag/v1.0.6
-[1.0.5]: https://github.com/FX6W9WZK/ha-gPlugD-energy/releases/tag/v1.0.5
-[1.0.4]: https://github.com/FX6W9WZK/ha-gPlugD-energy/releases/tag/v1.0.4
-[1.0.3]: https://github.com/FX6W9WZK/ha-gPlugD-energy/releases/tag/v1.0.3
-[1.0.2]: https://github.com/FX6W9WZK/ha-gPlugD-energy/releases/tag/v1.0.2
-[1.0.1]: https://github.com/FX6W9WZK/ha-gPlugD-energy/releases/tag/v1.0.1
-[1.0.0]: https://github.com/FX6W9WZK/ha-gPlugD-energy/releases/tag/v1.0.0
+[1.0.9]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.0.9
+[1.0.8]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.0.8
+[1.0.7]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.0.7
+[1.0.6]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.0.6
+[1.0.5]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.0.5
+[1.0.4]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.0.4
+[1.0.3]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.0.3
+[1.0.2]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.0.2
+[1.0.1]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.0.1
+[1.0.0]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.0.0

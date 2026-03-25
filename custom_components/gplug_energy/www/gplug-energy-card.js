@@ -1,19 +1,19 @@
 /**
- * gPlugD Energy Card – Custom Lovelace Card
- * Auto-registered by the gPlugD Energy integration.
+ * gPlug Energy Card – Custom Lovelace Card
+ * Auto-registered by the gPlug Energy integration.
  *
  * Shows real-time power flow, energy totals, and per-phase details.
  * Supports: DE, EN, FR, IT (fallback: EN)
  */
 
-const CARD_VERSION = "1.0.8";
+const CARD_VERSION = "1.0.9";
 
 const TRANSLATIONS = {
   en: {
     import: "Import", export: "Export", export_label: "Export",
     ht: "HT", nt: "NT", phases: "Phases",
     tariff1: "Tariff 1 (HT)", tariff2: "Tariff 2 (NT)",
-    title_default: "gPlugD Smart Meter",
+    title_default: "gPlug Smart Meter",
     show_phases: "Show phase details", show_export: "Show export/feed-in",
     entity_prefix_label: "Entity prefix (e.g. sensor.gplugd_)",
   },
@@ -21,7 +21,7 @@ const TRANSLATIONS = {
     import: "Bezug", export: "Einspeisung", export_label: "Einspeisung",
     ht: "HT", nt: "NT", phases: "Phasen",
     tariff1: "Tarif 1 (HT)", tariff2: "Tarif 2 (NT)",
-    title_default: "gPlugD Smart Meter",
+    title_default: "gPlug Smart Meter",
     show_phases: "Phasendetails anzeigen", show_export: "Einspeisung anzeigen",
     entity_prefix_label: "Entitäts-Präfix (z.B. sensor.gplugd_)",
   },
@@ -29,7 +29,7 @@ const TRANSLATIONS = {
     import: "Consommation", export: "Injection", export_label: "Injection",
     ht: "HP", nt: "HC", phases: "Phases",
     tariff1: "Tarif 1 (HP)", tariff2: "Tarif 2 (HC)",
-    title_default: "gPlugD Smart Meter",
+    title_default: "gPlug Smart Meter",
     show_phases: "Afficher les phases", show_export: "Afficher l'injection",
     entity_prefix_label: "Préfixe d'entité (ex. sensor.gplugd_)",
   },
@@ -37,7 +37,7 @@ const TRANSLATIONS = {
     import: "Consumo", export: "Immissione", export_label: "Immissione",
     ht: "alta", nt: "bassa", phases: "Fasi",
     tariff1: "Tariffa 1 (alta)", tariff2: "Tariffa 2 (bassa)",
-    title_default: "gPlugD Smart Meter",
+    title_default: "gPlug Smart Meter",
     show_phases: "Mostra dettagli fase", show_export: "Mostra immissione",
     entity_prefix_label: "Prefisso entità (es. sensor.gplugd_)",
   },
@@ -161,7 +161,7 @@ class GPlugEnergyCard extends HTMLElement {
         <div style="padding:16px 16px 8px">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
             <div style="font-size:16px;font-weight:500;color:${text1}">${title}</div>
-            <div style="font-size:11px;color:${text2}">gPlugD Energy</div>
+            <div style="font-size:11px;color:${text2}">gPlug Energy</div>
           </div>
 
           <div style="text-align:center;padding:12px 0">
@@ -256,13 +256,13 @@ customElements.define("gplug-energy-card-editor", GPlugEnergyCardEditor);
 window.customCards = window.customCards || [];
 window.customCards.push({
   type: "gplug-energy-card",
-  name: "gPlugD Energy",
+  name: "gPlug Energy",
   description: "Real-time smart meter overview with power flow, tariffs, and phase details.",
   preview: true,
-  documentationURL: "https://github.com/FX6W9WZK/ha-gPlugD-energy",
+  documentationURL: "https://github.com/FX6W9WZK/ha-gPlug-energy",
 });
 
 console.info(
-  `%c gPlugD Energy Card v${CARD_VERSION} `,
+  `%c gPlug Energy Card v${CARD_VERSION} `,
   "background:#1D9E75;color:#fff;font-weight:bold;padding:2px 6px;border-radius:4px"
 );

@@ -27,7 +27,7 @@
 ;   }
 ; }
 ;
-; Hinweis: Die gPlugD Energy HACS Integration erkennt diese Keys automatisch
+; Hinweis: Die gPlug Energy HACS Integration erkennt diese Keys automatisch
 ; und erstellt die passenden Home Assistant Sensoren mit korrekten
 ; device_class und state_class für das Energy Dashboard.
 ;

@@ -1,4 +1,4 @@
-"""Sensor platform for gPlugD Energy integration."""
+"""Sensor platform for gPlug Energy integration."""
 
 from __future__ import annotations
 
@@ -75,7 +75,7 @@ async def async_setup_entry(
     config_entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up gPlugD sensors from a config entry."""
+    """Set up gPlug sensors from a config entry."""
     connection_type = config_entry.data.get(CONF_CONNECTION_TYPE, CONNECTION_MQTT)
     device_name = config_entry.data.get(CONF_DEVICE_NAME, "gPlugD")
 
@@ -143,7 +143,7 @@ async def _setup_mqtt_sensors(
                 )
                 entities[entity_key] = entity
                 new_entities.append(entity)
-                _LOGGER.info("Discovered gPlugD sensor: %s → %s", key, canonical_key)
+                _LOGGER.info("Discovered gPlug sensor: %s → %s", key, canonical_key)
 
             # Update existing entity value
             entities[entity_key].update_value(value)
@@ -159,7 +159,7 @@ async def _setup_mqtt_sensors(
     if stat_topic != topic:
         await mqtt.async_subscribe(hass, stat_topic, _message_received, qos=0)
 
-    _LOGGER.info("gPlugD MQTT subscribed to: %s", topic)
+    _LOGGER.info("gPlug MQTT subscribed to: %s", topic)
 
 
 async def _setup_http_sensors(
@@ -184,11 +184,11 @@ async def _setup_http_sensors(
                     url, timeout=aiohttp.ClientTimeout(total=10)
                 ) as resp:
                     if resp.status != 200:
-                        _LOGGER.warning("HTTP %s from gPlugD at %s", resp.status, host)
+                        _LOGGER.warning("HTTP %s from gPlug at %s", resp.status, host)
                         return
                     data = await resp.json(content_type=None)
         except Exception as exc:
-            _LOGGER.error("Error polling gPlugD at %s: %s", host, exc)
+            _LOGGER.error("Error polling gPlug at %s: %s", host, exc)
             return
 
         # Status 10 response wraps in StatusSNS
@@ -296,7 +296,7 @@ def _build_device_info(config_entry: ConfigEntry, device_name: str) -> DeviceInf
 
 
 class GPlugSensor(SensorEntity):
-    """Representation of a gPlugD energy sensor."""
+    """Representation of a gPlug energy sensor."""
 
     _attr_has_entity_name = True
     _attr_should_poll = False
