@@ -68,7 +68,7 @@ async def async_update_options(hass: HomeAssistant, entry: ConfigEntry) -> None:
 
 async def _register_card(hass: HomeAssistant) -> None:
     """Register the gPlug Energy Lovelace card as a frontend resource."""
-    # Serve the JS file – handle both old and new HA API
+    # Step 1: Serve the JS file via HTTP
     try:
         if hasattr(hass.http, "async_register_static_paths"):
             from homeassistant.components.http import StaticPathConfig
@@ -78,45 +78,62 @@ async def _register_card(hass: HomeAssistant) -> None:
             )
         else:
             hass.http.register_static_path(CARD_URL, str(CARD_PATH), cache_headers=True)
+        _LOGGER.info("gPlug card served at %s", CARD_URL)
     except Exception as exc:
-        _LOGGER.warning("Could not register card static path: %s", exc)
+        _LOGGER.warning("Could not serve card file: %s", exc)
         return
 
-    # Auto-add to Lovelace resources so card appears in card picker
+    # Step 2: Register in Lovelace resources via storage
+    await _add_lovelace_resource(hass, CARD_URL)
+
+
+async def _add_lovelace_resource(hass: HomeAssistant, url: str) -> None:
+    """Add a JS module to Lovelace resources using the HA storage API."""
+    import json
+
+    storage_path = Path(hass.config.path(".storage")) / "lovelace_resources"
+
     try:
-        if "lovelace" not in hass.data:
-            _LOGGER.debug("Lovelace not loaded yet, card served at %s", CARD_URL)
-            return
+        # Read existing resources
+        data = {"data": {"items": []}, "version": 1, "key": "lovelace_resources"}
+        if storage_path.exists():
+            raw = await hass.async_add_executor_job(storage_path.read_text)
+            data = json.loads(raw)
 
-        resources = None
-        lovelace_data = hass.data.get("lovelace")
-
-        if hasattr(lovelace_data, "resources"):
-            resources = lovelace_data.resources
-        elif isinstance(lovelace_data, dict) and "resources" in lovelace_data:
-            resources = lovelace_data["resources"]
-
-        if resources is None:
-            _LOGGER.debug("Lovelace resources not found, card served at %s", CARD_URL)
-            return
+        items = data.get("data", {}).get("items", [])
 
         # Check if already registered
-        existing = []
-        if hasattr(resources, "async_items"):
-            existing = resources.async_items()
-
-        for item in existing:
-            if CARD_URL in item.get("url", ""):
-                _LOGGER.debug("gPlug Energy card already registered")
+        for item in items:
+            if url in item.get("url", ""):
+                _LOGGER.debug("gPlug card already in lovelace_resources")
                 return
 
-        # Register the resource
-        await resources.async_create_item({"res_type": "module", "url": CARD_URL})
-        _LOGGER.info("gPlug Energy card auto-registered at %s", CARD_URL)
+        # Find next ID
+        existing_ids = [
+            int(item.get("id", "0"))
+            for item in items
+            if str(item.get("id", "")).isdigit()
+        ]
+        next_id = str(max(existing_ids, default=0) + 1)
+
+        # Add the resource
+        items.append({"id": next_id, "type": "module", "url": url})
+        data["data"]["items"] = items
+
+        # Write back
+        content = json.dumps(data, indent=2)
+        await hass.async_add_executor_job(storage_path.write_text, content)
+
+        _LOGGER.info(
+            "gPlug card registered in lovelace_resources (id=%s, url=%s)",
+            next_id,
+            url,
+        )
 
     except Exception as exc:
-        _LOGGER.debug(
-            "Could not auto-register card resource (%s): %s",
-            CARD_URL,
-            exc,
+        _LOGGER.warning("Could not register card in lovelace_resources: %s", exc)
+        _LOGGER.warning(
+            "Please add manually: Settings > Dashboards > Resources > "
+            "Add Resource > URL: %s > Type: JavaScript Module",
+            url,
         )
