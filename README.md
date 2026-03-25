@@ -87,15 +87,61 @@ Sobald der gPlug Daten sendet, werden die Sensoren automatisch erkannt und in Ho
 
 ## Energy Dashboard einrichten
 
-Nach der Installation sind die Energie-Sensoren sofort für das Energy Dashboard verfügbar:
+Nach der Installation sind die Energie-Sensoren sofort für das Energy Dashboard verfügbar. So gehst du Schritt für Schritt vor:
 
-1. **Einstellungen → Dashboards → Energie**
-2. **Stromnetz**:
-   - Verbrauch: `Energy Import Total` (sensor.gplug_energy_...)
-   - Einspeisung: `Energy Export Total` (sensor.gplug_energy_...)
-3. Optional: Tarif-Sensoren für HT/NT hinzufügen
+### Schritt 1: Netzanschluss konfigurieren
 
-Die Sensoren haben bereits die korrekten Attribute (`device_class: energy`, `state_class: total_increasing`), sodass sie direkt im Energy Dashboard auswählbar sind.
+Navigiere zu **Einstellungen → Dashboards → Energie → Stromnetz → Netzanschluss konfigurieren**.
+
+#### Aus dem Netz bezogene Energie (Verbrauch)
+
+Wähle hier den **kumulativen Energiezähler** (kWh, `total_increasing`). Bei den meisten Schweizer Smart Metern wird der Bezug in **Tarif 1** (Hochtarif) gezählt:
+
+| Sensor-Entity | Beschreibung | Wann verwenden |
+|---------------|-------------|----------------|
+| `sensor.gplugd_energy_import_tariff_1` | Bezug Tarif 1 (HT) | **Standard** – bei den meisten VNB der Hauptzähler |
+| `sensor.gplugd_energy_import_tariff_2` | Bezug Tarif 2 (NT) | Nur bei Doppeltarif (HT/NT) als zweiten Eintrag hinzufügen |
+| `sensor.gplugd_energy_import_total` | Bezug Gesamt | Falls dein SM einen Gesamtzähler liefert (Ei > 0) |
+
+**Tipp:** Prüfe unter **Entwicklerwerkzeuge → Zustände**, welcher Sensor tatsächlich Werte > 0 hat. Bei deinem Smart Meter ist typischerweise `Ei1` (Tarif 1) der Hauptzähler.
+
+#### In das Netz eingespeiste Energie (PV-Einspeisung)
+
+Wenn du eine PV-Anlage hast:
+
+| Sensor-Entity | Beschreibung |
+|---------------|-------------|
+| `sensor.gplugd_energy_export_tariff_1` | Einspeisung Tarif 1 |
+| `sensor.gplugd_energy_export_total` | Einspeisung Gesamt |
+
+#### Kostenerfassung (optional)
+
+- **Fester Preis**: Trage deinen Stromtarif in CHF/kWh ein (z.B. 0.27)
+- **Entität mit aktuellem Preis**: Falls du einen dynamischen Tarif hast
+
+#### Art der Leistungsmessung
+
+Wähle hier **keinen** Leistungssensor. Das Energy Dashboard berechnet den Verbrauch aus den kumulativen kWh-Zählern automatisch. Die Leistungssensoren (`Pi`, `Po`) sind für Live-Dashboards, nicht fürs Energy Dashboard.
+
+### Schritt 2: Prüfen
+
+Nach dem Speichern dauert es ca. 1-2 Stunden, bis das Energy Dashboard die ersten Daten anzeigt. Prüfe unter **Entwicklerwerkzeuge → Statistiken**, ob die Sensoren korrekte Langzeitstatistiken aufbauen.
+
+### Übersicht: Welcher Sensor wofür?
+
+```
+Energy Dashboard (kWh, kumulativ)
+├── Netzbezug:      sensor.gplugd_energy_import_tariff_1  (Ei1)
+├── Netzeinspeisung: sensor.gplugd_energy_export_tariff_1  (Eo1)
+└── ggf. Tarif 2:   sensor.gplugd_energy_import_tariff_2  (Ei2)
+
+Live-Dashboard / Lovelace (kW/W, Momentanwerte)
+├── Bezugsleistung:  sensor.gplugd_power_import            (Pi)
+├── Einspeiseleist.: sensor.gplugd_power_export            (Po)
+├── Leistung L1-L3:  sensor.gplugd_power_import_l1/l2/l3  (P1i/P2i/P3i)
+├── Spannung L1-L3:  sensor.gplugd_voltage_l1/l2/l3       (V1/V2/V3)
+└── Strom L1-L3:     sensor.gplugd_current_l1/l2/l3       (I1/I2/I3)
+```
 
 ---
 
