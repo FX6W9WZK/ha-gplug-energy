@@ -39,33 +39,75 @@
       "init": {
         "title": "gPlug Energy – Optionen",
         "data": {
-          "polling_interval": "Abfrageintervall (Sekunden)"
+          "polling_interval": "Abfrageintervall (Sekunden)",
+          "auto_energy_dashboard": "Energy Dashboard automatisch konfigurieren",
+          "auto_lovelace_card": "Lovelace-Karte automatisch registrieren"
         }
       }
     }
   },
   "entity": {
     "sensor": {
-      "energy_import_total": { "name": "Energiebezug Gesamt" },
-      "energy_import_tariff_1": { "name": "Energiebezug Tarif 1 (HT)" },
-      "energy_import_tariff_2": { "name": "Energiebezug Tarif 2 (NT)" },
-      "energy_export_total": { "name": "Energieeinspeisung Gesamt" },
-      "energy_export_tariff_1": { "name": "Energieeinspeisung Tarif 1 (HT)" },
-      "energy_export_tariff_2": { "name": "Energieeinspeisung Tarif 2 (NT)" },
-      "power_import": { "name": "Bezugsleistung" },
-      "power_export": { "name": "Einspeiseleistung" },
-      "power_import_l1": { "name": "Bezugsleistung L1" },
-      "power_import_l2": { "name": "Bezugsleistung L2" },
-      "power_import_l3": { "name": "Bezugsleistung L3" },
-      "power_export_l1": { "name": "Einspeiseleistung L1" },
-      "power_export_l2": { "name": "Einspeiseleistung L2" },
-      "power_export_l3": { "name": "Einspeiseleistung L3" },
-      "voltage_l1": { "name": "Spannung L1" },
-      "voltage_l2": { "name": "Spannung L2" },
-      "voltage_l3": { "name": "Spannung L3" },
-      "current_l1": { "name": "Strom L1" },
-      "current_l2": { "name": "Strom L2" },
-      "current_l3": { "name": "Strom L3" }
+      "energy_import_total": {
+        "name": "Energiebezug Gesamt"
+      },
+      "energy_import_tariff_1": {
+        "name": "Energiebezug Tarif 1 (HT)"
+      },
+      "energy_import_tariff_2": {
+        "name": "Energiebezug Tarif 2 (NT)"
+      },
+      "energy_export_total": {
+        "name": "Energieeinspeisung Gesamt"
+      },
+      "energy_export_tariff_1": {
+        "name": "Energieeinspeisung Tarif 1 (HT)"
+      },
+      "energy_export_tariff_2": {
+        "name": "Energieeinspeisung Tarif 2 (NT)"
+      },
+      "power_import": {
+        "name": "Bezugsleistung"
+      },
+      "power_export": {
+        "name": "Einspeiseleistung"
+      },
+      "power_import_l1": {
+        "name": "Bezugsleistung L1"
+      },
+      "power_import_l2": {
+        "name": "Bezugsleistung L2"
+      },
+      "power_import_l3": {
+        "name": "Bezugsleistung L3"
+      },
+      "power_export_l1": {
+        "name": "Einspeiseleistung L1"
+      },
+      "power_export_l2": {
+        "name": "Einspeiseleistung L2"
+      },
+      "power_export_l3": {
+        "name": "Einspeiseleistung L3"
+      },
+      "voltage_l1": {
+        "name": "Spannung L1"
+      },
+      "voltage_l2": {
+        "name": "Spannung L2"
+      },
+      "voltage_l3": {
+        "name": "Spannung L3"
+      },
+      "current_l1": {
+        "name": "Strom L1"
+      },
+      "current_l2": {
+        "name": "Strom L2"
+      },
+      "current_l3": {
+        "name": "Strom L3"
+      }
     }
   }
 }

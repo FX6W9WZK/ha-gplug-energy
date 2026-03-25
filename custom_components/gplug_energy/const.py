@@ -69,9 +69,14 @@ CONF_CONNECTION_TYPE = "connection_type"
 CONNECTION_MQTT = "mqtt"
 CONNECTION_HTTP = "http"
 
+CONF_AUTO_ENERGY = "auto_energy_dashboard"
+CONF_AUTO_CARD = "auto_lovelace_card"
+
 DEFAULT_MQTT_TOPIC = "tele/gplugd/SENSOR"
 DEFAULT_POLLING_INTERVAL = 10
 DEFAULT_DEVICE_NAME = "gPlugD"
+DEFAULT_AUTO_ENERGY = True
+DEFAULT_AUTO_CARD = True
 
 # ── OBIS-Code Sensor Mapping ──────────────────────────────────────────────
 # Maps gPlug Tasmota script variable names to human-readable sensor configs.

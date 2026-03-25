@@ -5,6 +5,14 @@ Alle relevanten Änderungen an der gPlug Energy Integration werden in dieser Dat
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/)
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [1.1.1] – 2026-03-26
+
+### Hinzugefügt
+- **Optionen für Auto-Konfiguration**: Energy Dashboard und Lovelace-Karte können jetzt unter Einstellungen → Geräte & Dienste → gPlug Energy → Konfigurieren ein-/ausgeschaltet werden
+- Beide Optionen sind standardmässig aktiviert (wie bisher)
+- Wer die Konfiguration manuell machen möchte, kann die Automatik deaktivieren
+- Optionen wirken sofort nach HA-Neustart
+
 ## [1.1.0] – 2026-03-26
 
 ### Hinzugefügt
@@ -110,6 +118,7 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 - gPlugD, gPlugD-E, gPlugE
 - Smart Meter: Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy
 
+[1.1.1]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.1.1
 [1.1.0]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.1.0
 [1.0.9]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.0.9
 [1.0.8]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.0.8

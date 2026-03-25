@@ -18,7 +18,13 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.event import async_call_later
 
-from .const import DOMAIN
+from .const import (
+    CONF_AUTO_CARD,
+    CONF_AUTO_ENERGY,
+    DEFAULT_AUTO_CARD,
+    DEFAULT_AUTO_ENERGY,
+    DOMAIN,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -37,24 +43,37 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN][entry.entry_id] = entry.data
 
-    # Register custom Lovelace card
-    await _register_card(hass)
+    # Check options (options override data)
+    auto_card = entry.options.get(
+        CONF_AUTO_CARD, entry.data.get(CONF_AUTO_CARD, DEFAULT_AUTO_CARD)
+    )
+    auto_energy = entry.options.get(
+        CONF_AUTO_ENERGY, entry.data.get(CONF_AUTO_ENERGY, DEFAULT_AUTO_ENERGY)
+    )
+
+    # Register custom Lovelace card (if enabled)
+    if auto_card:
+        await _register_card(hass)
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     entry.async_on_unload(entry.add_update_listener(async_update_options))
 
-    # Auto-configure Energy Dashboard after sensors have had time to register
-    async def _delayed_energy_config(_now=None):
-        from .energy import async_configure_energy_dashboard
+    # Auto-configure Energy Dashboard (if enabled)
+    if auto_energy:
 
-        await async_configure_energy_dashboard(hass, entry.entry_id)
+        async def _delayed_energy_config(_now=None):
+            from .energy import async_configure_energy_dashboard
 
-    async_call_later(hass, 30, _delayed_energy_config)
+            await async_configure_energy_dashboard(hass, entry.entry_id)
+
+        async_call_later(hass, 30, _delayed_energy_config)
 
     _LOGGER.info(
-        "gPlug Energy integration loaded for topic: %s",
+        "gPlug Energy loaded (topic=%s, auto_energy=%s, auto_card=%s)",
         entry.data.get("mqtt_topic", "n/a"),
+        auto_energy,
+        auto_card,
     )
     return True
 

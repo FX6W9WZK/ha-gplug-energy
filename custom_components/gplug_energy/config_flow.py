@@ -12,6 +12,8 @@ from homeassistant.core import callback
 from homeassistant.helpers import selector
 
 from .const import (
+    CONF_AUTO_CARD,
+    CONF_AUTO_ENERGY,
     CONF_CONNECTION_TYPE,
     CONF_DEVICE_NAME,
     CONF_HTTP_HOST,
@@ -19,6 +21,8 @@ from .const import (
     CONF_POLLING_INTERVAL,
     CONNECTION_HTTP,
     CONNECTION_MQTT,
+    DEFAULT_AUTO_CARD,
+    DEFAULT_AUTO_ENERGY,
     DEFAULT_DEVICE_NAME,
     DEFAULT_MQTT_TOPIC,
     DEFAULT_POLLING_INTERVAL,
@@ -180,33 +184,41 @@ class GPlugOptionsFlowHandler(OptionsFlow):
             CONF_CONNECTION_TYPE, CONNECTION_MQTT
         )
 
+        # Current values (from options first, then data, then defaults)
+        auto_energy = self.config_entry.options.get(
+            CONF_AUTO_ENERGY,
+            self.config_entry.data.get(CONF_AUTO_ENERGY, DEFAULT_AUTO_ENERGY),
+        )
+        auto_card = self.config_entry.options.get(
+            CONF_AUTO_CARD,
+            self.config_entry.data.get(CONF_AUTO_CARD, DEFAULT_AUTO_CARD),
+        )
+
+        schema_dict: dict = {
+            vol.Optional(CONF_AUTO_ENERGY, default=auto_energy): bool,
+            vol.Optional(CONF_AUTO_CARD, default=auto_card): bool,
+        }
+
         if connection_type == CONNECTION_HTTP:
-            return self.async_show_form(
-                step_id="init",
-                data_schema=vol.Schema(
-                    {
-                        vol.Optional(
-                            CONF_POLLING_INTERVAL,
-                            default=self.config_entry.data.get(
-                                CONF_POLLING_INTERVAL, DEFAULT_POLLING_INTERVAL
-                            ),
-                        ): selector.NumberSelector(
-                            selector.NumberSelectorConfig(
-                                min=5,
-                                max=300,
-                                step=5,
-                                unit_of_measurement="s",
-                                mode=selector.NumberSelectorMode.BOX,
-                            ),
-                        ),
-                    }
+            polling = self.config_entry.options.get(
+                CONF_POLLING_INTERVAL,
+                self.config_entry.data.get(
+                    CONF_POLLING_INTERVAL, DEFAULT_POLLING_INTERVAL
                 ),
+            )
+            schema_dict[vol.Optional(CONF_POLLING_INTERVAL, default=polling)] = (
+                selector.NumberSelector(
+                    selector.NumberSelectorConfig(
+                        min=5,
+                        max=300,
+                        step=5,
+                        unit_of_measurement="s",
+                        mode=selector.NumberSelectorMode.BOX,
+                    ),
+                )
             )
 
         return self.async_show_form(
             step_id="init",
-            data_schema=vol.Schema({}),
-            description_placeholders={
-                "info": "MQTT configuration is managed via the gPlug web interface.",
-            },
+            data_schema=vol.Schema(schema_dict),
         )

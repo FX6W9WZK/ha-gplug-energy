@@ -39,33 +39,75 @@
       "init": {
         "title": "gPlug Energy – Options",
         "data": {
-          "polling_interval": "Polling interval (seconds)"
+          "polling_interval": "Polling interval (seconds)",
+          "auto_energy_dashboard": "Auto-configure Energy Dashboard",
+          "auto_lovelace_card": "Auto-register Lovelace card"
         }
       }
     }
   },
   "entity": {
     "sensor": {
-      "energy_import_total": { "name": "Energy import total" },
-      "energy_import_tariff_1": { "name": "Energy import tariff 1" },
-      "energy_import_tariff_2": { "name": "Energy import tariff 2" },
-      "energy_export_total": { "name": "Energy export total" },
-      "energy_export_tariff_1": { "name": "Energy export tariff 1" },
-      "energy_export_tariff_2": { "name": "Energy export tariff 2" },
-      "power_import": { "name": "Power import" },
-      "power_export": { "name": "Power export" },
-      "power_import_l1": { "name": "Power import L1" },
-      "power_import_l2": { "name": "Power import L2" },
-      "power_import_l3": { "name": "Power import L3" },
-      "power_export_l1": { "name": "Power export L1" },
-      "power_export_l2": { "name": "Power export L2" },
-      "power_export_l3": { "name": "Power export L3" },
-      "voltage_l1": { "name": "Voltage L1" },
-      "voltage_l2": { "name": "Voltage L2" },
-      "voltage_l3": { "name": "Voltage L3" },
-      "current_l1": { "name": "Current L1" },
-      "current_l2": { "name": "Current L2" },
-      "current_l3": { "name": "Current L3" }
+      "energy_import_total": {
+        "name": "Energy import total"
+      },
+      "energy_import_tariff_1": {
+        "name": "Energy import tariff 1"
+      },
+      "energy_import_tariff_2": {
+        "name": "Energy import tariff 2"
+      },
+      "energy_export_total": {
+        "name": "Energy export total"
+      },
+      "energy_export_tariff_1": {
+        "name": "Energy export tariff 1"
+      },
+      "energy_export_tariff_2": {
+        "name": "Energy export tariff 2"
+      },
+      "power_import": {
+        "name": "Power import"
+      },
+      "power_export": {
+        "name": "Power export"
+      },
+      "power_import_l1": {
+        "name": "Power import L1"
+      },
+      "power_import_l2": {
+        "name": "Power import L2"
+      },
+      "power_import_l3": {
+        "name": "Power import L3"
+      },
+      "power_export_l1": {
+        "name": "Power export L1"
+      },
+      "power_export_l2": {
+        "name": "Power export L2"
+      },
+      "power_export_l3": {
+        "name": "Power export L3"
+      },
+      "voltage_l1": {
+        "name": "Voltage L1"
+      },
+      "voltage_l2": {
+        "name": "Voltage L2"
+      },
+      "voltage_l3": {
+        "name": "Voltage L3"
+      },
+      "current_l1": {
+        "name": "Current L1"
+      },
+      "current_l2": {
+        "name": "Current L2"
+      },
+      "current_l3": {
+        "name": "Current L3"
+      }
     }
   }
 }

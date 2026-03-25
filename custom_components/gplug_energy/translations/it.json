@@ -39,33 +39,75 @@
       "init": {
         "title": "gPlug Energy – Opzioni",
         "data": {
-          "polling_interval": "Intervallo di polling (secondi)"
+          "polling_interval": "Intervallo di polling (secondi)",
+          "auto_energy_dashboard": "Configura dashboard Energy automaticamente",
+          "auto_lovelace_card": "Registra scheda Lovelace automaticamente"
         }
       }
     }
   },
   "entity": {
     "sensor": {
-      "energy_import_total": { "name": "Consumo totale" },
-      "energy_import_tariff_1": { "name": "Consumo tariffa 1 (alta)" },
-      "energy_import_tariff_2": { "name": "Consumo tariffa 2 (bassa)" },
-      "energy_export_total": { "name": "Immissione totale" },
-      "energy_export_tariff_1": { "name": "Immissione tariffa 1 (alta)" },
-      "energy_export_tariff_2": { "name": "Immissione tariffa 2 (bassa)" },
-      "power_import": { "name": "Potenza consumata" },
-      "power_export": { "name": "Potenza immessa" },
-      "power_import_l1": { "name": "Potenza consumata L1" },
-      "power_import_l2": { "name": "Potenza consumata L2" },
-      "power_import_l3": { "name": "Potenza consumata L3" },
-      "power_export_l1": { "name": "Potenza immessa L1" },
-      "power_export_l2": { "name": "Potenza immessa L2" },
-      "power_export_l3": { "name": "Potenza immessa L3" },
-      "voltage_l1": { "name": "Tensione L1" },
-      "voltage_l2": { "name": "Tensione L2" },
-      "voltage_l3": { "name": "Tensione L3" },
-      "current_l1": { "name": "Corrente L1" },
-      "current_l2": { "name": "Corrente L2" },
-      "current_l3": { "name": "Corrente L3" }
+      "energy_import_total": {
+        "name": "Consumo totale"
+      },
+      "energy_import_tariff_1": {
+        "name": "Consumo tariffa 1 (alta)"
+      },
+      "energy_import_tariff_2": {
+        "name": "Consumo tariffa 2 (bassa)"
+      },
+      "energy_export_total": {
+        "name": "Immissione totale"
+      },
+      "energy_export_tariff_1": {
+        "name": "Immissione tariffa 1 (alta)"
+      },
+      "energy_export_tariff_2": {
+        "name": "Immissione tariffa 2 (bassa)"
+      },
+      "power_import": {
+        "name": "Potenza consumata"
+      },
+      "power_export": {
+        "name": "Potenza immessa"
+      },
+      "power_import_l1": {
+        "name": "Potenza consumata L1"
+      },
+      "power_import_l2": {
+        "name": "Potenza consumata L2"
+      },
+      "power_import_l3": {
+        "name": "Potenza consumata L3"
+      },
+      "power_export_l1": {
+        "name": "Potenza immessa L1"
+      },
+      "power_export_l2": {
+        "name": "Potenza immessa L2"
+      },
+      "power_export_l3": {
+        "name": "Potenza immessa L3"
+      },
+      "voltage_l1": {
+        "name": "Tensione L1"
+      },
+      "voltage_l2": {
+        "name": "Tensione L2"
+      },
+      "voltage_l3": {
+        "name": "Tensione L3"
+      },
+      "current_l1": {
+        "name": "Corrente L1"
+      },
+      "current_l2": {
+        "name": "Corrente L2"
+      },
+      "current_l3": {
+        "name": "Corrente L3"
+      }
     }
   }
 }
