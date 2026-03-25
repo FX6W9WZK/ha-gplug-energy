@@ -29,11 +29,14 @@ async def async_configure_energy_dashboard(
     hass: HomeAssistant,
     entry_id: str,
 ) -> None:
-    """Auto-configure sensors in the Energy Dashboard."""
+    """Auto-configure sensors in the Energy Dashboard.
+
+    Only runs if no gPlug sensors are already present in the grid config.
+    This prevents duplicates when the user has already configured manually
+    or when HA restarts.
+    """
     try:
-        from homeassistant.components.energy import (
-            async_get_manager,
-        )
+        from homeassistant.components.energy import async_get_manager
     except ImportError:
         _LOGGER.debug("Energy component not available, skipping auto-config")
         return
@@ -50,11 +53,69 @@ async def async_configure_energy_dashboard(
         return
 
     ent_reg = er.async_get(hass)
-    existing_grid = prefs.get("energy_sources", [])
+    existing_sources = prefs.get("energy_sources", [])
+
+    # Collect all entity IDs from all existing grid sources
+    all_existing_from = set()
+    all_existing_to = set()
+    for source in existing_sources:
+        if source.get("type") == "grid":
+            for flow in source.get("flow_from", []):
+                stat = flow.get("stat_energy_from", "")
+                if stat:
+                    all_existing_from.add(stat)
+            for flow in source.get("flow_to", []):
+                stat = flow.get("stat_energy_to", "")
+                if stat:
+                    all_existing_to.add(stat)
+
+    # Check if ANY gplug sensor is already in the energy config
+    all_existing = all_existing_from | all_existing_to
+    if any("gplug" in eid for eid in all_existing):
+        _LOGGER.debug("gPlug sensors already in Energy Dashboard, skipping auto-config")
+        return
+
+    # Resolve gPlug entity IDs
+    import_entities = []
+    for key in ENERGY_IMPORT_KEYS:
+        entity_id = _find_entity_id(ent_reg, entry_id, key)
+        if entity_id:
+            import_entities.append(entity_id)
+
+    export_entities = []
+    for key in ENERGY_EXPORT_KEYS:
+        entity_id = _find_entity_id(ent_reg, entry_id, key)
+        if entity_id:
+            export_entities.append(entity_id)
+
+    if not import_entities and not export_entities:
+        _LOGGER.debug("No gPlug energy sensors found yet, skipping auto-config")
+        return
+
+    # Build grid source
+    flow_from = [
+        {
+            "stat_energy_from": eid,
+            "stat_cost": None,
+            "entity_energy_price": None,
+            "number_energy_price": None,
+        }
+        for eid in import_entities
+    ]
+
+    flow_to = [
+        {
+            "stat_energy_to": eid,
+            "stat_compensation": None,
+            "entity_energy_price": None,
+            "number_energy_price": None,
+        }
+        for eid in export_entities
+    ]
 
     # Find existing grid source or create new one
     grid_source = None
-    for source in existing_grid:
+    for source in existing_sources:
         if source.get("type") == "grid":
             grid_source = source
             break
@@ -62,59 +123,18 @@ async def async_configure_energy_dashboard(
     if grid_source is None:
         grid_source = {
             "type": "grid",
-            "flow_from": [],
-            "flow_to": [],
+            "flow_from": flow_from,
+            "flow_to": flow_to,
             "cost_adjustment_day": 0.0,
         }
+    else:
+        grid_source["flow_from"] = grid_source.get("flow_from", []) + flow_from
+        grid_source["flow_to"] = grid_source.get("flow_to", []) + flow_to
 
-    existing_from_ids = {
-        f.get("stat_energy_from", "") for f in grid_source.get("flow_from", [])
-    }
-    existing_to_ids = {
-        f.get("stat_energy_to", "") for f in grid_source.get("flow_to", [])
-    }
-
-    added_from = []
-    added_to = []
-
-    # Find and add import sensors (consumption)
-    for key in ENERGY_IMPORT_KEYS:
-        entity_id = _find_entity_id(ent_reg, entry_id, key)
-        if entity_id and entity_id not in existing_from_ids:
-            grid_source.setdefault("flow_from", []).append(
-                {
-                    "stat_energy_from": entity_id,
-                    "stat_cost": None,
-                    "entity_energy_price": None,
-                    "number_energy_price": None,
-                }
-            )
-            added_from.append(entity_id)
-            existing_from_ids.add(entity_id)
-
-    # Find and add export sensors (feed-in)
-    for key in ENERGY_EXPORT_KEYS:
-        entity_id = _find_entity_id(ent_reg, entry_id, key)
-        if entity_id and entity_id not in existing_to_ids:
-            grid_source.setdefault("flow_to", []).append(
-                {
-                    "stat_energy_to": entity_id,
-                    "stat_compensation": None,
-                    "entity_energy_price": None,
-                    "number_energy_price": None,
-                }
-            )
-            added_to.append(entity_id)
-            existing_to_ids.add(entity_id)
-
-    if not added_from and not added_to:
-        _LOGGER.debug("No new sensors to add to Energy Dashboard")
-        return
-
-    # Update or insert grid source
+    # Rebuild sources list
     new_sources = []
     found_grid = False
-    for source in existing_grid:
+    for source in existing_sources:
         if source.get("type") == "grid":
             new_sources.append(grid_source)
             found_grid = True
@@ -127,9 +147,9 @@ async def async_configure_energy_dashboard(
     try:
         await manager.async_update({"energy_sources": new_sources})
         _LOGGER.info(
-            "Auto-configured Energy Dashboard: from=%s, to=%s",
-            added_from,
-            added_to,
+            "Auto-configured Energy Dashboard: import=%s, export=%s",
+            import_entities,
+            export_entities,
         )
     except Exception as exc:
         _LOGGER.warning("Could not auto-configure Energy Dashboard: %s", exc)
@@ -142,5 +162,4 @@ def _find_entity_id(
 ) -> str | None:
     """Find an entity_id by its unique_id pattern."""
     unique_id = f"{entry_id}_{sensor_key}"
-    entry = ent_reg.async_get_entity_id("sensor", DOMAIN, unique_id)
-    return entry
+    return ent_reg.async_get_entity_id("sensor", DOMAIN, unique_id)

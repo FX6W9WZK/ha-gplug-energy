@@ -5,6 +5,12 @@ Alle relevanten Änderungen an der gPlug Energy Integration werden in dieser Dat
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/)
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [1.0.4] – 2026-03-25
+
+### Behoben
+- **Keine Duplikate im Energy Dashboard**: Auto-Konfiguration prüft jetzt ob bereits gPlug-Sensoren im Energy Dashboard vorhanden sind und überspringt in diesem Fall
+- Verhindert `duplicate unique ID` Fehler bei HA-Neustart wenn Sensoren bereits manuell oder durch vorherigen Lauf konfiguriert wurden
+
 ## [1.0.3] – 2026-03-25
 
 ### Behoben
@@ -52,6 +58,7 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 - gPlugD, gPlugD-E, gPlugE
 - Smart Meter: Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy
 
+[1.0.4]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.4
 [1.0.3]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.3
 [1.0.2]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.2
 [1.0.1]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.1
