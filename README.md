@@ -95,33 +95,49 @@ Navigiere zu **Einstellungen → Dashboards → Energie → Stromnetz → Netzan
 
 #### Aus dem Netz bezogene Energie (Verbrauch)
 
-Wähle hier den **kumulativen Energiezähler** (kWh, `total_increasing`). Bei den meisten Schweizer Smart Metern wird der Bezug in **Tarif 1** (Hochtarif) gezählt:
+Wähle hier den **kumulativen Energiezähler** (kWh, `total_increasing`).
 
-| Sensor-Entity | Beschreibung | Wann verwenden |
-|---------------|-------------|----------------|
-| `sensor.gplugd_energy_import_tariff_1` | Bezug Tarif 1 (HT) | **Standard** – bei den meisten VNB der Hauptzähler |
-| `sensor.gplugd_energy_import_tariff_2` | Bezug Tarif 2 (NT) | Nur bei Doppeltarif (HT/NT) als zweiten Eintrag hinzufügen |
-| `sensor.gplugd_energy_import_total` | Bezug Gesamt | Falls dein SM einen Gesamtzähler liefert (Ei > 0) |
+**Viele Schweizer Städte (z.B. Zürich, EWZ) verwenden Doppeltarif (HT/NT).** In diesem Fall musst du **beide Tarife als separate Einträge** hinzufügen:
 
-**Tipp:** Prüfe unter **Entwicklerwerkzeuge → Zustände**, welcher Sensor tatsächlich Werte > 0 hat. Bei deinem Smart Meter ist typischerweise `Ei1` (Tarif 1) der Hauptzähler.
+**Konfiguration für Doppeltarif (HT/NT):**
+
+1. Klicke auf **„Verbrauch hinzufügen"**
+2. Wähle `sensor.gplugd_energy_import_tariff_1` → das ist der **Hochtarif (HT)**
+3. Klicke nochmals auf **„Verbrauch hinzufügen"**
+4. Wähle `sensor.gplugd_energy_import_tariff_2` → das ist der **Niedertarif (NT)**
+
+| Sensor-Entity | OBIS | Beschreibung |
+|---------------|------|-------------|
+| `sensor.gplugd_energy_import_tariff_1` | Ei1 (1.8.1) | **Hochtarif (HT)** – z.B. 06:00–22:00 |
+| `sensor.gplugd_energy_import_tariff_2` | Ei2 (1.8.2) | **Niedertarif (NT)** – z.B. 22:00–06:00 |
+| `sensor.gplugd_energy_import_total` | Ei (1.8.0) | Gesamtzähler (nur falls vom SM geliefert) |
+
+**Tipp:** Prüfe unter **Entwicklerwerkzeuge → Zustände**, ob `Ei2` tatsächlich Werte > 0 liefert. Manche VNB aktivieren den Doppeltarif erst auf Anfrage.
+
+**Konfiguration für Einzeltarif:**
+
+Falls dein VNB nur einen Tarif verwendet, reicht ein einzelner Eintrag mit `sensor.gplugd_energy_import_tariff_1`.
 
 #### In das Netz eingespeiste Energie (PV-Einspeisung)
 
-Wenn du eine PV-Anlage hast:
+Wenn du eine PV-Anlage hast, füge analog **beide Einspeise-Tarife** hinzu:
 
-| Sensor-Entity | Beschreibung |
-|---------------|-------------|
-| `sensor.gplugd_energy_export_tariff_1` | Einspeisung Tarif 1 |
-| `sensor.gplugd_energy_export_total` | Einspeisung Gesamt |
+| Sensor-Entity | OBIS | Beschreibung |
+|---------------|------|-------------|
+| `sensor.gplugd_energy_export_tariff_1` | Eo1 (2.8.1) | Einspeisung Hochtarif |
+| `sensor.gplugd_energy_export_tariff_2` | Eo2 (2.8.2) | Einspeisung Niedertarif |
 
 #### Kostenerfassung (optional)
 
-- **Fester Preis**: Trage deinen Stromtarif in CHF/kWh ein (z.B. 0.27)
-- **Entität mit aktuellem Preis**: Falls du einen dynamischen Tarif hast
+Bei Doppeltarif kannst du pro Eintrag einen eigenen Preis hinterlegen:
+- **HT (Tarif 1)**: z.B. 0.27 CHF/kWh
+- **NT (Tarif 2)**: z.B. 0.21 CHF/kWh
+
+Wähle dazu bei jedem Verbrauchseintrag **„Einen festen Preis verwenden"** und trage den jeweiligen Tarif ein.
 
 #### Art der Leistungsmessung
 
-Wähle hier **keinen** Leistungssensor. Das Energy Dashboard berechnet den Verbrauch aus den kumulativen kWh-Zählern automatisch. Die Leistungssensoren (`Pi`, `Po`) sind für Live-Dashboards, nicht fürs Energy Dashboard.
+Wähle hier **keinen** Leistungssensor. Das Energy Dashboard berechnet den Verbrauch aus den kumulativen kWh-Zählern automatisch. Die Leistungssensoren (`Pi`, `Po`) sind für Live-Dashboards in Lovelace, nicht fürs Energy Dashboard.
 
 ### Schritt 2: Prüfen
 
@@ -131,9 +147,10 @@ Nach dem Speichern dauert es ca. 1-2 Stunden, bis das Energy Dashboard die erste
 
 ```
 Energy Dashboard (kWh, kumulativ)
-├── Netzbezug:      sensor.gplugd_energy_import_tariff_1  (Ei1)
-├── Netzeinspeisung: sensor.gplugd_energy_export_tariff_1  (Eo1)
-└── ggf. Tarif 2:   sensor.gplugd_energy_import_tariff_2  (Ei2)
+├── Bezug HT:        sensor.gplugd_energy_import_tariff_1  (Ei1)
+├── Bezug NT:        sensor.gplugd_energy_import_tariff_2  (Ei2)
+├── Einspeisung HT:  sensor.gplugd_energy_export_tariff_1  (Eo1)
+└── Einspeisung NT:  sensor.gplugd_energy_export_tariff_2  (Eo2)
 
 Live-Dashboard / Lovelace (kW/W, Momentanwerte)
 ├── Bezugsleistung:  sensor.gplugd_power_import            (Pi)
