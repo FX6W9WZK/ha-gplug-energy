@@ -68,12 +68,19 @@ async def async_update_options(hass: HomeAssistant, entry: ConfigEntry) -> None:
 
 async def _register_card(hass: HomeAssistant) -> None:
     """Register the gPlug Energy Lovelace card as a frontend resource."""
-    # Serve the JS file
-    hass.http.register_static_path(
-        CARD_URL,
-        str(CARD_PATH),
-        cache_headers=True,
-    )
+    # Serve the JS file – handle both old and new HA API
+    try:
+        if hasattr(hass.http, "async_register_static_paths"):
+            from homeassistant.components.http import StaticPathConfig
+
+            await hass.http.async_register_static_paths(
+                [StaticPathConfig(CARD_URL, str(CARD_PATH), True)]
+            )
+        else:
+            hass.http.register_static_path(CARD_URL, str(CARD_PATH), cache_headers=True)
+    except Exception as exc:
+        _LOGGER.warning("Could not register card static path: %s", exc)
+        return
 
     # Auto-add to Lovelace resources so card appears in card picker
     try:
