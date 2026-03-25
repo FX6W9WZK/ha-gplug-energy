@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/github/license/FX6W9WZK/ha-gPlug-energy?color=yellow)](https://github.com/FX6W9WZK/ha-gPlug-energy/blob/main/LICENSE)
 [![Built with Claude AI](https://img.shields.io/badge/Built%20with-Claude%20AI-cc785c?logo=anthropic&logoColor=white)](https://claude.ai)
 
-> Vollwertige Home Assistant Integration für [gPlug](https://gplug.ch/) Smart-Meter-Sensoren (gPlugD, gPlugD-E, gPlugE) mit direkter Anbindung an das Energy Dashboard.
+> Vollwertige Home Assistant Integration für alle [gPlug](https://gplug.ch/) Smart-Meter-Sensoren (gPlugD, gPlugD-E, gPlugK, gPlugM) mit direkter Anbindung an das Energy Dashboard.
 
 ---
 
@@ -20,8 +20,23 @@
 | **Lovelace-Karte** | Registriert sich selbst – erscheint im Karten-Picker |
 | **Tarife** | Doppeltarif HT/NT (z.B. EWZ Zürich) |
 | **Phasen** | 3-Phasen: Spannung, Strom, Leistung (L1/L2/L3) |
-| **Smart Meter** | Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy |
+| **gPlug Produkte** | gPlugD, gPlugD-E, gPlugK, gPlugM (alle unterstützt) |
 | **Sprachen** | DE / FR / EN / IT |
+
+---
+
+## Kompatible gPlug Produkte
+
+Die Integration unterstützt **alle aktuellen gPlug Produkte**. Das Gerätemodell wird automatisch aus dem MQTT-Topic erkannt.
+
+| Produkt | Smart Meter | Schnittstelle | Anbindung | Preis |
+|---------|------------|---------------|-----------|------:|
+| **[gPlugD](https://gplug.ch/produkte/gplugd/)** | Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy | P1-DSMR (RJ12) | WiFi 2.4 GHz | 44 CHF |
+| **[gPlugD-E](https://gplug.ch/produkte/gplugd-e/)** | Gleich wie gPlugD | P1-DSMR (RJ12) | Ethernet + WiFi | 60 CHF |
+| **[gPlugK](https://gplug.ch/produkte/gplugk/)** | Kamstrup Omnipower | Kamstrup HAN | WiFi 2.4 GHz | 49 CHF |
+| **[gPlugM](https://gplug.ch/produkte/gplugm/)** | L+G E450 | M-Bus (RJ12) | WiFi 2.4 GHz | 50 CHF |
+
+Alle Produkte verwenden die Firmware **Tasmota** und publizieren Sensordaten im gleichen JSON-Format via **MQTT**. Die Integration erkennt automatisch alle Sensor-Keys – unabhängig davon welches gPlug Modell verwendet wird.
 
 ---
 
@@ -52,7 +67,7 @@ Ordner `custom_components/gplug_energy/` nach `<config>/custom_components/` kopi
 
 ### Voraussetzung
 
-Der gPlugD muss per MQTT mit einem Broker verbunden sein (z.B. Mosquitto). Konfiguration über die gPlug Web-UI: **Einstellungen → MQTT**.
+Der gPlug (egal welches Modell) muss per MQTT mit einem Broker verbunden sein (z.B. Mosquitto). Konfiguration über die gPlug Web-UI: **Einstellungen → MQTT**.
 
 ### Integration hinzufügen
 
@@ -242,16 +257,18 @@ In der gPlug Tasmota-Konsole `Status 6` eingeben.
 ## Architektur
 
 ```
-Smart Meter ──RJ12──▸ gPlugD (ESP32-C3 / Tasmota)
-                          │
-                          │ MQTT: tele/<topic>/SENSOR
-                          ▼
-                     Mosquitto Broker
-                          │
-                          │ Subscribe
-                          ▼
+Smart Meter ──────────▸ gPlug (Tasmota)
+  │                        │
+  │  P1-DSMR (gPlugD)      │ MQTT: tele/<topic>/SENSOR
+  │  P1-DSMR (gPlugD-E)    │
+  │  HAN    (gPlugK)       ▼
+  │  M-Bus  (gPlugM)   Mosquitto Broker
+                            │
+                            │ Subscribe
+                            ▼
                   ┌─ gPlug Energy Integration ─┐
                   │                             │
+                  │  Auto-Model-Detection       │
                   │  Auto-Discovery             │
                   │  device_class / state_class  │
                   │  Energy Dashboard Config     │

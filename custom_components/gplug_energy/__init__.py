@@ -1,9 +1,10 @@
 """
 gPlug Energy – HACS Integration for gPlug Smart Meter Sensors.
 
-Reads energy data from gPlugD/gPlugE/gPlugD-E devices (Tasmota-based)
+Reads energy data from all gPlug devices (gPlugD, gPlugD-E, gPlugK, gPlugM)
 via MQTT and creates properly configured sensor entities for the
-Home Assistant Energy Dashboard.
+Home Assistant Energy Dashboard. Device model is auto-detected from the
+MQTT topic name.
 """
 
 from __future__ import annotations

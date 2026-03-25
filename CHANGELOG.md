@@ -5,6 +5,17 @@ Alle relevanten Änderungen an der gPlug Energy Integration werden in dieser Dat
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/)
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [1.1.0] – 2026-03-26
+
+### Hinzugefügt
+- **Alle gPlug Produkte unterstützt**: gPlugD, gPlugD-E, gPlugK (Kamstrup), gPlugM (M-Bus)
+- **Auto-Model-Detection**: Gerätemodell wird automatisch aus dem MQTT-Topic erkannt (z.B. `tele/gPlugK_ABC123/SENSOR` → Modell: gPlugK)
+- **Produkt-Übersicht im README**: Tabelle mit allen Modellen, Schnittstellen, kompatiblen Smart Metern
+
+### Geändert
+- `_build_device_info()` erkennt jetzt das Modell automatisch statt immer "gPlugD" zu setzen
+- README: Voraussetzung und Architektur sind jetzt modell-unabhängig formuliert
+
 ## [1.0.9] – 2026-03-26
 
 ### Geändert
@@ -99,6 +110,7 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 - gPlugD, gPlugD-E, gPlugE
 - Smart Meter: Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy
 
+[1.1.0]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.1.0
 [1.0.9]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.0.9
 [1.0.8]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.0.8
 [1.0.7]: https://github.com/FX6W9WZK/ha-gPlug-energy/releases/tag/v1.0.7

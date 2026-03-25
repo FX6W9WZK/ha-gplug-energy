@@ -34,11 +34,12 @@ from .const import (
     CONF_MQTT_TOPIC,
     CONF_POLLING_INTERVAL,
     CONNECTION_MQTT,
+    DEFAULT_MODEL,
     DEFAULT_POLLING_INTERVAL,
     DOMAIN,
     KNOWN_JSON_PREFIXES,
     MANUFACTURER,
-    MODEL_GPLUGD,
+    MODEL_DETECT_PATTERNS,
     SENSOR_KEY_ALIASES,
     SENSOR_SKIP_KEYS,
     SENSOR_TYPES_ENERGY,
@@ -280,13 +281,30 @@ def _make_generic_sensor_config(key: str, value: Any) -> dict:
     }
 
 
+def _detect_model(config_entry: ConfigEntry) -> str:
+    """Auto-detect the gPlug model from the MQTT topic or device name."""
+    topic = config_entry.data.get(CONF_MQTT_TOPIC, "")
+    name = config_entry.data.get(CONF_DEVICE_NAME, "")
+    search_str = f"{topic} {name}"
+
+    # Check longest patterns first (gPlugD-E before gPlugD)
+    for pattern, model in sorted(
+        MODEL_DETECT_PATTERNS.items(), key=lambda x: -len(x[0])
+    ):
+        if pattern in search_str:
+            return model
+
+    return DEFAULT_MODEL
+
+
 def _build_device_info(config_entry: ConfigEntry, device_name: str) -> DeviceInfo:
-    """Build the device info dict."""
+    """Build the device info dict with auto-detected model."""
+    model = _detect_model(config_entry)
     info = DeviceInfo(
         identifiers={(DOMAIN, config_entry.entry_id)},
         name=device_name,
         manufacturer=MANUFACTURER,
-        model=MODEL_GPLUGD,
+        model=model,
         sw_version="Tasmota",
     )
     http_host = config_entry.data.get(CONF_HTTP_HOST)

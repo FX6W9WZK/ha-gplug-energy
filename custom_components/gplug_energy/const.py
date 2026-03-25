@@ -2,9 +2,63 @@
 
 DOMAIN = "gplug_energy"
 MANUFACTURER = "Gantrisch Energie AG"
+
+# ── Device Models ─────────────────────────────────────────────────────────
 MODEL_GPLUGD = "gPlugD"
 MODEL_GPLUGD_E = "gPlugD-E"
 MODEL_GPLUGE = "gPlugE"
+MODEL_GPLUGK = "gPlugK"
+MODEL_GPLUGM = "gPlugM"
+
+# Map MQTT topic patterns to device models
+# Topic format: tele/<devicename>/SENSOR
+MODEL_DETECT_PATTERNS = {
+    "gPlugD-E": MODEL_GPLUGD_E,  # Must be before gPlugD
+    "gPlugD_E": MODEL_GPLUGD_E,
+    "gPlugDE": MODEL_GPLUGD_E,
+    "gPlugD": MODEL_GPLUGD,
+    "gPlugE": MODEL_GPLUGE,
+    "gPlugK": MODEL_GPLUGK,
+    "gPlugM": MODEL_GPLUGM,
+    "gplugd-e": MODEL_GPLUGD_E,
+    "gplugd_e": MODEL_GPLUGD_E,
+    "gplugde": MODEL_GPLUGD_E,
+    "gplugd": MODEL_GPLUGD,
+    "gpluge": MODEL_GPLUGE,
+    "gplugk": MODEL_GPLUGK,
+    "gplugm": MODEL_GPLUGM,
+}
+
+# Smart Meter compatibility per model
+MODEL_INFO = {
+    MODEL_GPLUGD: {
+        "interface": "P1-DSMR (RJ12)",
+        "connectivity": "WiFi 2.4 GHz",
+        "meters": "Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy",
+    },
+    MODEL_GPLUGD_E: {
+        "interface": "P1-DSMR (RJ12)",
+        "connectivity": "Ethernet + WiFi",
+        "meters": "Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy",
+    },
+    MODEL_GPLUGE: {
+        "interface": "P1-DSMR (RJ12)",
+        "connectivity": "Ethernet",
+        "meters": "Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy",
+    },
+    MODEL_GPLUGK: {
+        "interface": "Kamstrup HAN",
+        "connectivity": "WiFi 2.4 GHz",
+        "meters": "Kamstrup Omnipower",
+    },
+    MODEL_GPLUGM: {
+        "interface": "M-Bus (RJ12)",
+        "connectivity": "WiFi 2.4 GHz",
+        "meters": "L+G E450",
+    },
+}
+
+DEFAULT_MODEL = MODEL_GPLUGD
 
 CONF_MQTT_TOPIC = "mqtt_topic"
 CONF_DEVICE_NAME = "device_name"
