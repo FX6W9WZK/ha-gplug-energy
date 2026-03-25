@@ -1,15 +1,25 @@
 {
   "domain": "gplug_energy",
   "name": "gPlug Energy (Smart Meter)",
-  "codeowners": ["@gplug-energy"],
+  "after_dependencies": [
+    "http",
+    "lovelace",
+    "energy"
+  ],
+  "codeowners": [
+    "@gplug-energy"
+  ],
   "config_flow": true,
-  "dependencies": ["mqtt"],
-  "after_dependencies": ["http", "lovelace", "energy"],
+  "dependencies": [
+    "mqtt"
+  ],
   "documentation": "https://github.com/FX6W9WZK/ha-gplug-energy",
   "integration_type": "device",
   "iot_class": "local_push",
   "issue_tracker": "https://github.com/FX6W9WZK/ha-gplug-energy/issues",
-  "mqtt": ["tasmota/discovery/#"],
+  "mqtt": [
+    "tasmota/discovery/#"
+  ],
   "requirements": [],
   "version": "1.0.0"
 }
