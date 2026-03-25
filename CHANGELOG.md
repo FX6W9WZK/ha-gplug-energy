@@ -5,6 +5,15 @@ Alle relevanten Änderungen an der gPlug Energy Integration werden in dieser Dat
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.1.0/)
 und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [1.0.5] – 2026-03-25
+
+### Behoben
+- **Energy Dashboard Auto-Config komplett überarbeitet**: Verwendet jetzt das flache Grid-Format (ein Grid-Eintrag pro Tarif) statt `flow_from`/`flow_to` das bei vielen HA-Versionen Schema-Fehler verursachte
+- Jeder Tarif wird als eigener Grid-Eintrag angelegt: HT (0.27 CHF/kWh), NT (0.21 CHF/kWh)
+- Import und Export werden automatisch gepaart (HT↔HT, NT↔NT)
+- Duplikat-Prüfung: Läuft nur einmal, überspringt wenn bereits ein gPlug-Sensor konfiguriert ist
+- Bestehende Energy-Quellen (z.B. Aqara-Geräte) bleiben erhalten
+
 ## [1.0.4] – 2026-03-25
 
 ### Behoben
@@ -58,6 +67,7 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 - gPlugD, gPlugD-E, gPlugE
 - Smart Meter: Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy
 
+[1.0.5]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.5
 [1.0.4]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.4
 [1.0.3]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.3
 [1.0.2]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.2
