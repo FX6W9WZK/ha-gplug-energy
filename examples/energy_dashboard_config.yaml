@@ -1,0 +1,189 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Beispiel: Home Assistant Energy Dashboard Konfiguration für gPlug
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# Diese Datei zeigt, wie die gPlug Energy Sensoren optimal ins
+# Energy Dashboard und in Lovelace-Dashboards integriert werden.
+#
+# Voraussetzung: Die Integration "gPlug Energy" ist installiert und
+# hat die Sensoren bereits automatisch erstellt.
+#
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │  1. UTILITY METER – Tages-/Monats-/Jahresauswertungen                   │
+# │     Füge diesen Block in deine configuration.yaml ein.                   │
+# └───────────────────────────────────────────────────────────────────────────┘
+
+utility_meter:
+  # ── Energiebezug (Import) ──────────────────────────────────────────────
+  strom_bezug_taeglich:
+    source: sensor.gplugd_energy_import_total
+    name: "Strombezug Täglich"
+    cycle: daily
+
+  strom_bezug_woche:
+    source: sensor.gplugd_energy_import_total
+    name: "Strombezug Wöchentlich"
+    cycle: weekly
+
+  strom_bezug_monat:
+    source: sensor.gplugd_energy_import_total
+    name: "Strombezug Monatlich"
+    cycle: monthly
+
+  strom_bezug_jahr:
+    source: sensor.gplugd_energy_import_total
+    name: "Strombezug Jährlich"
+    cycle: yearly
+
+  # ── Energieeinspeisung (Export / PV) ───────────────────────────────────
+  strom_einspeisung_taeglich:
+    source: sensor.gplugd_energy_export_total
+    name: "Einspeisung Täglich"
+    cycle: daily
+
+  strom_einspeisung_monat:
+    source: sensor.gplugd_energy_export_total
+    name: "Einspeisung Monatlich"
+    cycle: monthly
+
+  strom_einspeisung_jahr:
+    source: sensor.gplugd_energy_export_total
+    name: "Einspeisung Jährlich"
+    cycle: yearly
+
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │  2. TEMPLATE SENSOR – Netto-Leistung (Bezug minus Einspeisung)           │
+# │     Zeigt ob gerade bezogen oder eingespeist wird.                       │
+# └───────────────────────────────────────────────────────────────────────────┘
+
+template:
+  - sensor:
+      - name: "Nettoleistung"
+        unique_id: gplug_net_power
+        unit_of_measurement: "kW"
+        device_class: power
+        state_class: measurement
+        icon: >
+          {% if states('sensor.gplugd_power_export') | float > 0 %}
+            mdi:solar-power
+          {% else %}
+            mdi:transmission-tower
+          {% endif %}
+        state: >
+          {% set import_power = states('sensor.gplugd_power_import') | float(0) %}
+          {% set export_power = states('sensor.gplugd_power_export') | float(0) %}
+          {{ (import_power - export_power) | round(3) }}
+
+      - name: "Stromfluss Richtung"
+        unique_id: gplug_power_direction
+        icon: >
+          {% if states('sensor.nettoleistung') | float > 0 %}
+            mdi:arrow-down-bold
+          {% else %}
+            mdi:arrow-up-bold
+          {% endif %}
+        state: >
+          {% if states('sensor.nettoleistung') | float > 0.01 %}
+            Bezug
+          {% elif states('sensor.nettoleistung') | float < -0.01 %}
+            Einspeisung
+          {% else %}
+            Ausgeglichen
+          {% endif %}
+
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │  3. LOVELACE DASHBOARD – Beispiel-Karten                                │
+# └───────────────────────────────────────────────────────────────────────────┘
+
+# ── Gauge-Karte für aktuelle Leistung ────────────────────────────────────
+# Kopiere diesen Block in dein Lovelace Dashboard (YAML-Modus):
+#
+# type: gauge
+# entity: sensor.nettoleistung
+# name: Aktuelle Nettoleistung
+# unit: kW
+# min: -10
+# max: 10
+# needle: true
+# severity:
+#   green: -10
+#   yellow: 2
+#   red: 5
+#
+# ── Entities-Karte für Übersicht ─────────────────────────────────────────
+#
+# type: entities
+# title: ⚡ Smart Meter – gPlug
+# show_header_toggle: false
+# entities:
+#   - entity: sensor.nettoleistung
+#     name: Nettoleistung
+#   - entity: sensor.stromfluss_richtung
+#     name: Richtung
+#   - type: divider
+#   - entity: sensor.gplugd_energy_import_total
+#     name: Bezug Gesamt
+#     icon: mdi:transmission-tower-import
+#   - entity: sensor.gplugd_energy_export_total
+#     name: Einspeisung Gesamt
+#     icon: mdi:transmission-tower-export
+#   - type: divider
+#   - entity: sensor.strom_bezug_taeglich
+#     name: Bezug Heute
+#   - entity: sensor.strom_bezug_monat
+#     name: Bezug diesen Monat
+#   - type: divider
+#   - entity: sensor.gplugd_voltage_l1
+#   - entity: sensor.gplugd_voltage_l2
+#   - entity: sensor.gplugd_voltage_l3
+#   - entity: sensor.gplugd_current_l1
+#   - entity: sensor.gplugd_current_l2
+#   - entity: sensor.gplugd_current_l3
+#
+# ── History Graph für Leistungsverlauf ───────────────────────────────────
+#
+# type: history-graph
+# title: Leistungsverlauf (24h)
+# hours_to_show: 24
+# entities:
+#   - entity: sensor.gplugd_power_import
+#     name: Bezug
+#   - entity: sensor.gplugd_power_export
+#     name: Einspeisung
+
+
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │  4. AUTOMATION – Beispiel: Benachrichtigung bei hohem Verbrauch          │
+# └───────────────────────────────────────────────────────────────────────────┘
+
+automation:
+  - alias: "Warnung: Hoher Stromverbrauch"
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.gplugd_power_import
+        above: 5.0
+        for:
+          minutes: 5
+    action:
+      - service: notify.notify
+        data:
+          title: "⚡ Hoher Stromverbrauch"
+          message: >
+            Aktueller Bezug: {{ states('sensor.gplugd_power_import') }} kW
+            seit 5 Minuten über 5 kW.
+
+  - alias: "Info: PV-Einspeisung aktiv"
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.gplugd_power_export
+        above: 0.1
+    action:
+      - service: notify.notify
+        data:
+          title: "☀️ PV-Einspeisung aktiv"
+          message: >
+            Aktuelle Einspeisung: {{ states('sensor.gplugd_power_export') }} kW

@@ -1,0 +1,81 @@
+; ─────────────────────────────────────────────────────────────────────────────
+; gPlugD – Tasmota P1-DSMR Script (Beispiel / Referenz)
+; ─────────────────────────────────────────────────────────────────────────────
+;
+; Dieses Script wird auf dem gPlugD unter Werkzeuge → Skript eingegeben.
+; Es liest die Energiedaten vom Smart Meter via P1-DSMR Schnittstelle
+; und publiziert sie als JSON über MQTT.
+;
+; MQTT Payload Beispiel:
+; tele/<topic>/SENSOR = {
+;   "Time":"2025-03-25T10:30:00",
+;   "ENERGY":{
+;     "Ei_1.8":12345.678,
+;     "Ei1_1.8.1":8000.123,
+;     "Ei2_1.8.2":4345.555,
+;     "Eo_2.8":5678.901,
+;     "Eo1_2.8.1":3456.789,
+;     "Eo2_2.8.2":2222.112,
+;     "Pi_1.7":1.234,
+;     "Po_2.7":0.000,
+;     "V1_32.7":230.1,
+;     "V2_52.7":231.5,
+;     "V3_72.7":229.8,
+;     "I1_31.7":5.34,
+;     "I2_51.7":3.21,
+;     "I3_71.7":4.56
+;   }
+; }
+;
+; Hinweis: Die gPlug Energy HACS Integration erkennt diese Keys automatisch
+; und erstellt die passenden Home Assistant Sensoren mit korrekten
+; device_class und state_class für das Energy Dashboard.
+;
+; ─────────────────────────────────────────────────────────────────────────────
+; WICHTIG: Dieses Script ist ein Referenzbeispiel. Ihr gPlugD wird mit
+; einem vorinstallierten Script ausgeliefert. Ändern Sie das Script nur,
+; wenn Sie wissen was Sie tun, oder kontaktieren Sie info@gplug.ch
+; ─────────────────────────────────────────────────────────────────────────────
+
+>D
+; Variablen-Deklaration
+
+>B
+; Boot-Sektion
+=>sensor53 r
+; SerialBuffer vergrössern für 115200 Baud
+=>serialbuffer 520
+
+>M 1
+; Meter-Definition: 1 Meter, GPIO-Pin, Protokoll, etc.
+; +1,3,s,0,115200,ENERGY
+;
+; Zeilen mit OBIS-Codes:
+; 1,1-0:1.8.0*255(@1,Ei_1.8,kWh,Ei_1.8,3
+; 1,1-0:1.8.1*255(@1,Ei1_1.8.1,kWh,Ei1_1.8.1,3
+; 1,1-0:1.8.2*255(@1,Ei2_1.8.2,kWh,Ei2_1.8.2,3
+; 1,1-0:2.8.0*255(@1,Eo_2.8,kWh,Eo_2.8,3
+; 1,1-0:2.8.1*255(@1,Eo1_2.8.1,kWh,Eo1_2.8.1,3
+; 1,1-0:2.8.2*255(@1,Eo2_2.8.2,kWh,Eo2_2.8.2,3
+; 1,1-0:1.7.0*255(@1,Pi_1.7,kW,Pi_1.7,3
+; 1,1-0:2.7.0*255(@1,Po_2.7,kW,Po_2.7,3
+; 1,1-0:32.7.0*255(@1,V1_32.7,V,V1_32.7,1
+; 1,1-0:52.7.0*255(@1,V2_52.7,V,V2_52.7,1
+; 1,1-0:72.7.0*255(@1,V3_72.7,V,V3_72.7,1
+; 1,1-0:31.7.0*255(@1,I1_31.7,A,I1_31.7,2
+; 1,1-0:51.7.0*255(@1,I2_51.7,A,I2_51.7,2
+; 1,1-0:71.7.0*255(@1,I3_71.7,A,I3_71.7,2
+;
+; OBIS-Code Referenz:
+; 1.8.0 = Wirkenergie Bezug Gesamt (A+)
+; 1.8.1 = Wirkenergie Bezug Tarif 1 (HT)
+; 1.8.2 = Wirkenergie Bezug Tarif 2 (NT)
+; 2.8.0 = Wirkenergie Einspeisung Gesamt (A-)
+; 1.7.0 = Momentane Bezugsleistung (P+)
+; 2.7.0 = Momentane Einspeiseleistung (P-)
+; 32.7  = Spannung Phase L1
+; 52.7  = Spannung Phase L2
+; 72.7  = Spannung Phase L3
+; 31.7  = Strom Phase L1
+; 51.7  = Strom Phase L2
+; 71.7  = Strom Phase L3
