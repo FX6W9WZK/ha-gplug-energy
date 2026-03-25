@@ -10,7 +10,7 @@
       },
       "mqtt": {
         "title": "gPlug Energy – MQTT",
-        "description": "Enter the MQTT sensor topic of your gPlug.\nTypically: tele/<your-gplug-topic>/SENSOR\nCheck your gPlug web UI → Information for the correct topic.",
+        "description": "Enter the MQTT sensor topic of your gPlug.\nTypically: tele/your-gplug-topic/SENSOR\nCheck your gPlug web UI, section Information, for the correct topic.",
         "data": {
           "device_name": "Device name",
           "mqtt_topic": "MQTT sensor topic"

@@ -5,10 +5,10 @@ Reads energy data from gPlugD/gPlugE/gPlugD-E devices (Tasmota-based)
 via MQTT and creates properly configured sensor entities for the
 Home Assistant Energy Dashboard.
 """
+
 from __future__ import annotations
 
 import logging
-from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform

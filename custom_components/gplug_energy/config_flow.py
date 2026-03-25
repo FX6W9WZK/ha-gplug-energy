@@ -1,4 +1,5 @@
 """Config flow for gPlug Energy integration."""
+
 from __future__ import annotations
 
 import logging
@@ -102,18 +103,11 @@ class GPlugEnergyConfigFlow(ConfigFlow, domain=DOMAIN):
             step_id="mqtt",
             data_schema=vol.Schema(
                 {
-                    vol.Required(
-                        CONF_DEVICE_NAME, default=DEFAULT_DEVICE_NAME
-                    ): str,
-                    vol.Required(
-                        CONF_MQTT_TOPIC, default=DEFAULT_MQTT_TOPIC
-                    ): str,
+                    vol.Required(CONF_DEVICE_NAME, default=DEFAULT_DEVICE_NAME): str,
+                    vol.Required(CONF_MQTT_TOPIC, default=DEFAULT_MQTT_TOPIC): str,
                 }
             ),
             errors=errors,
-            description_placeholders={
-                "topic_hint": "tele/<your-gplug-topic>/SENSOR",
-            },
         )
 
     async def async_step_http(
@@ -147,9 +141,7 @@ class GPlugEnergyConfigFlow(ConfigFlow, domain=DOMAIN):
             step_id="http",
             data_schema=vol.Schema(
                 {
-                    vol.Required(
-                        CONF_DEVICE_NAME, default=DEFAULT_DEVICE_NAME
-                    ): str,
+                    vol.Required(CONF_DEVICE_NAME, default=DEFAULT_DEVICE_NAME): str,
                     vol.Required(CONF_HTTP_HOST): str,
                     vol.Optional(
                         CONF_POLLING_INTERVAL, default=DEFAULT_POLLING_INTERVAL
@@ -204,7 +196,10 @@ class GPlugOptionsFlowHandler(OptionsFlow):
                             ),
                         ): selector.NumberSelector(
                             selector.NumberSelectorConfig(
-                                min=5, max=300, step=5, unit_of_measurement="s",
+                                min=5,
+                                max=300,
+                                step=5,
+                                unit_of_measurement="s",
                                 mode=selector.NumberSelectorMode.BOX,
                             ),
                         ),

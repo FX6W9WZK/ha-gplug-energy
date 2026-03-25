@@ -1,4 +1,5 @@
 """Sensor platform for gPlug Energy integration."""
+
 from __future__ import annotations
 
 import json
@@ -32,7 +33,6 @@ from .const import (
     CONF_HTTP_HOST,
     CONF_MQTT_TOPIC,
     CONF_POLLING_INTERVAL,
-    CONNECTION_HTTP,
     CONNECTION_MQTT,
     DEFAULT_POLLING_INTERVAL,
     DOMAIN,
@@ -92,7 +92,6 @@ async def _setup_mqtt_sensors(
 ) -> None:
     """Set up MQTT-based sensors with auto-discovery of available keys."""
     topic = config_entry.data[CONF_MQTT_TOPIC]
-    discovered_keys: set[str] = set()
     entities: dict[str, GPlugSensor] = {}
 
     device_info = _build_device_info(config_entry, device_name)
@@ -110,7 +109,9 @@ async def _setup_mqtt_sensors(
         sensor_data = _extract_sensor_data(payload)
 
         if not sensor_data:
-            _LOGGER.debug("No recognized sensor data in payload: %s", list(payload.keys()))
+            _LOGGER.debug(
+                "No recognized sensor data in payload: %s", list(payload.keys())
+            )
             return
 
         new_entities = []
@@ -174,7 +175,9 @@ async def _setup_http_sensors(
         """Fetch sensor data via HTTP."""
         try:
             async with aiohttp.ClientSession() as session:
-                async with session.get(url, timeout=aiohttp.ClientTimeout(total=10)) as resp:
+                async with session.get(
+                    url, timeout=aiohttp.ClientTimeout(total=10)
+                ) as resp:
                     if resp.status != 200:
                         _LOGGER.warning("HTTP %s from gPlug at %s", resp.status, host)
                         return

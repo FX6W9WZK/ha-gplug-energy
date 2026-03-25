@@ -77,7 +77,6 @@ SENSOR_TYPES_ENERGY = {
         "state_class": "total_increasing",
         "icon": "mdi:counter",
     },
-
     # ── Momentanwerte (Leistung) ──────────────────────────────────────────
     "Pi_1.7": {
         "name": "Bezugsleistung",
@@ -95,7 +94,6 @@ SENSOR_TYPES_ENERGY = {
         "state_class": "measurement",
         "icon": "mdi:flash-outline",
     },
-
     # ── Spannung pro Phase ────────────────────────────────────────────────
     "V1_32.7": {
         "name": "Spannung L1",
@@ -121,7 +119,6 @@ SENSOR_TYPES_ENERGY = {
         "state_class": "measurement",
         "icon": "mdi:sine-wave",
     },
-
     # ── Strom pro Phase ───────────────────────────────────────────────────
     "I1_31.7": {
         "name": "Strom L1",
