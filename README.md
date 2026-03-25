@@ -29,12 +29,12 @@
 
 Die Integration unterstützt **alle aktuellen gPlug Produkte**. Das Gerätemodell wird automatisch aus dem MQTT-Topic erkannt.
 
-| Produkt | Smart Meter | Schnittstelle | Anbindung | Preis |
-|---------|------------|---------------|-----------|------:|
-| **[gPlugD](https://gplug.ch/produkte/gplugd/)** | Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy | P1-DSMR (RJ12) | WiFi 2.4 GHz | 44 CHF |
-| **[gPlugD-E](https://gplug.ch/produkte/gplugd-e/)** | Gleich wie gPlugD | P1-DSMR (RJ12) | Ethernet + WiFi | 60 CHF |
-| **[gPlugK](https://gplug.ch/produkte/gplugk/)** | Kamstrup Omnipower | Kamstrup HAN | WiFi 2.4 GHz | 49 CHF |
-| **[gPlugM](https://gplug.ch/produkte/gplugm/)** | L+G E450 | M-Bus (RJ12) | WiFi 2.4 GHz | 50 CHF |
+| Produkt | Smart Meter | Schnittstelle | Anbindung |
+|---------|------------|---------------|-----------|
+| **[gPlugD](https://gplug.ch/produkte/gplugd/)** | Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy | P1-DSMR (RJ12) | WiFi 2.4 GHz |
+| **[gPlugD-E](https://gplug.ch/produkte/gplugd-e/)** | Gleich wie gPlugD | P1-DSMR (RJ12) | Ethernet + WiFi |
+| **[gPlugK](https://gplug.ch/produkte/gplugk/)** | Kamstrup Omnipower | Kamstrup HAN | WiFi 2.4 GHz |
+| **[gPlugM](https://gplug.ch/produkte/gplugm/)** | L+G E450 | M-Bus (RJ12) | WiFi 2.4 GHz |
 
 Alle Produkte verwenden die Firmware **Tasmota** und publizieren Sensordaten im gleichen JSON-Format via **MQTT**. Die Integration erkennt automatisch alle Sensor-Keys – unabhängig davon welches gPlug Modell verwendet wird.
 
