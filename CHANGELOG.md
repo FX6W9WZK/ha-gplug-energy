@@ -85,11 +85,11 @@ und dieses Projekt folgt [Semantic Versioning](https://semver.org/lang/de/).
 - gPlugD, gPlugD-E, gPlugE
 - Smart Meter: Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy
 
-[1.0.7]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.7
-[1.0.6]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.6
-[1.0.5]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.5
-[1.0.4]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.4
-[1.0.3]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.3
-[1.0.2]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.2
-[1.0.1]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.1
-[1.0.0]: https://github.com/FX6W9WZK/ha-gplug-energy/releases/tag/v1.0.0
+[1.0.7]: https://github.com/FX6W9WZK/ha-gPlugD-energy/releases/tag/v1.0.7
+[1.0.6]: https://github.com/FX6W9WZK/ha-gPlugD-energy/releases/tag/v1.0.6
+[1.0.5]: https://github.com/FX6W9WZK/ha-gPlugD-energy/releases/tag/v1.0.5
+[1.0.4]: https://github.com/FX6W9WZK/ha-gPlugD-energy/releases/tag/v1.0.4
+[1.0.3]: https://github.com/FX6W9WZK/ha-gPlugD-energy/releases/tag/v1.0.3
+[1.0.2]: https://github.com/FX6W9WZK/ha-gPlugD-energy/releases/tag/v1.0.2
+[1.0.1]: https://github.com/FX6W9WZK/ha-gPlugD-energy/releases/tag/v1.0.1
+[1.0.0]: https://github.com/FX6W9WZK/ha-gPlugD-energy/releases/tag/v1.0.0

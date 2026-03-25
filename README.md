@@ -1,9 +1,9 @@
 # gPlugD Energy – Home Assistant Integration (HACS)
 
 [![HACS Badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz)
-[![Validate](https://github.com/FX6W9WZK/ha-gplug-energy/actions/workflows/validate.yml/badge.svg)](https://github.com/FX6W9WZK/ha-gplug-energy/actions)
-[![GitHub Release](https://img.shields.io/github/v/release/FX6W9WZK/ha-gplug-energy)](https://github.com/FX6W9WZK/ha-gplug-energy/releases)
-[![License: MIT](https://img.shields.io/github/license/FX6W9WZK/ha-gplug-energy?color=yellow)](https://github.com/FX6W9WZK/ha-gplug-energy/blob/main/LICENSE)
+[![Validate](https://github.com/FX6W9WZK/ha-gPlugD-energy/actions/workflows/validate.yml/badge.svg)](https://github.com/FX6W9WZK/ha-gPlugD-energy/actions)
+[![GitHub Release](https://img.shields.io/github/v/release/FX6W9WZK/ha-gPlugD-energy)](https://github.com/FX6W9WZK/ha-gPlugD-energy/releases)
+[![License: MIT](https://img.shields.io/github/license/FX6W9WZK/ha-gPlugD-energy?color=yellow)](https://github.com/FX6W9WZK/ha-gPlugD-energy/blob/main/LICENSE)
 [![Built with Claude AI](https://img.shields.io/badge/Built%20with-Claude%20AI-cc785c?logo=anthropic&logoColor=white)](https://claude.ai)
 
 > Vollwertige Home Assistant Integration für [gPlugD](https://gplug.ch/) Smart-Meter-Sensoren (gPlugD, gPlugD-E, gPlugE) mit direkter Anbindung an das Energy Dashboard.
@@ -38,7 +38,7 @@ Die Lovelace-Karte zeigt Echtzeit-Bezug/Einspeisung, HT/NT-Zählerstände und 3-
 ### HACS (empfohlen)
 
 1. **HACS** öffnen → **⋮** (oben rechts) → **Benutzerdefinierte Repositories**
-2. URL: `https://github.com/FX6W9WZK/ha-gplug-energy` · Kategorie: **Integration**
+2. URL: `https://github.com/FX6W9WZK/ha-gPlugD-energy` · Kategorie: **Integration**
 3. **gPlugD Energy** suchen → **Herunterladen**
 4. Home Assistant **neu starten**
 

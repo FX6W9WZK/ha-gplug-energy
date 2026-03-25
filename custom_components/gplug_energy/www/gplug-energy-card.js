@@ -259,7 +259,7 @@ window.customCards.push({
   name: "gPlugD Energy",
   description: "Real-time smart meter overview with power flow, tariffs, and phase details.",
   preview: true,
-  documentationURL: "https://github.com/FX6W9WZK/ha-gplug-energy",
+  documentationURL: "https://github.com/FX6W9WZK/ha-gPlugD-energy",
 });
 
 console.info(
