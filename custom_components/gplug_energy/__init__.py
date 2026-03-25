@@ -1,5 +1,5 @@
 """
-gPlug Energy – HACS Integration for gPlug Smart Meter Sensors.
+gPlugD Energy – HACS Integration for gPlugD Smart Meter Sensors.
 
 Reads energy data from gPlugD/gPlugE/gPlugD-E devices (Tasmota-based)
 via MQTT and creates properly configured sensor entities for the
@@ -32,7 +32,7 @@ CARD_PATH = Path(__file__).parent / "www" / "gplug-energy-card.js"
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up gPlug Energy from a config entry."""
+    """Set up gPlugD Energy from a config entry."""
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN][entry.entry_id] = entry.data
 
@@ -52,7 +52,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     async_call_later(hass, 30, _delayed_energy_config)
 
     _LOGGER.info(
-        "gPlug Energy integration loaded for topic: %s",
+        "gPlugD Energy integration loaded for topic: %s",
         entry.data.get("mqtt_topic", "n/a"),
     )
     return True
@@ -72,7 +72,7 @@ async def async_update_options(hass: HomeAssistant, entry: ConfigEntry) -> None:
 
 
 async def _register_card(hass: HomeAssistant) -> None:
-    """Register the gPlug Energy Lovelace card as a frontend resource."""
+    """Register the gPlugD Energy Lovelace card as a frontend resource."""
     # Step 1: Serve the JS file via HTTP (static path without query string)
     try:
         if hasattr(hass.http, "async_register_static_paths"):
@@ -85,7 +85,7 @@ async def _register_card(hass: HomeAssistant) -> None:
             hass.http.register_static_path(
                 CARD_STATIC_URL, str(CARD_PATH), cache_headers=True
             )
-        _LOGGER.info("gPlug card served at %s", CARD_STATIC_URL)
+        _LOGGER.info("gPlugD card served at %s", CARD_STATIC_URL)
     except Exception as exc:
         _LOGGER.warning("Could not serve card file: %s", exc)
         return
@@ -112,14 +112,14 @@ async def _add_lovelace_resource(hass: HomeAssistant, url: str) -> None:
             existing_url = item.get("url", "")
             if CARD_STATIC_URL in existing_url:
                 if existing_url == url:
-                    _LOGGER.debug("gPlug card already registered with current version")
+                    _LOGGER.debug("gPlugD card already registered with current version")
                     return
                 # Update version
                 item["url"] = url
                 data["data"]["items"] = items
                 content = json.dumps(data, indent=2)
                 await hass.async_add_executor_job(storage_path.write_text, content)
-                _LOGGER.info("gPlug card updated to %s", url)
+                _LOGGER.info("gPlugD card updated to %s", url)
                 return
 
         # Not found – add new entry
@@ -137,7 +137,7 @@ async def _add_lovelace_resource(hass: HomeAssistant, url: str) -> None:
         await hass.async_add_executor_job(storage_path.write_text, content)
 
         _LOGGER.info(
-            "gPlug card registered in lovelace_resources (id=%s, url=%s)",
+            "gPlugD card registered in lovelace_resources (id=%s, url=%s)",
             next_id,
             url,
         )

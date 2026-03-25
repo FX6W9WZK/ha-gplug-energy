@@ -1,4 +1,4 @@
-"""Config flow for gPlug Energy integration."""
+"""Config flow for gPlugD Energy integration."""
 
 from __future__ import annotations
 
@@ -29,7 +29,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class GPlugEnergyConfigFlow(ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for gPlug Energy."""
+    """Handle a config flow for gPlugD Energy."""
 
     VERSION = 1
 
@@ -91,7 +91,7 @@ class GPlugEnergyConfigFlow(ConfigFlow, domain=DOMAIN):
                 self._abort_if_unique_id_configured()
 
                 return self.async_create_entry(
-                    title=f"gPlug – {device_name}",
+                    title=f"gPlugD – {device_name}",
                     data={
                         CONF_CONNECTION_TYPE: CONNECTION_MQTT,
                         CONF_MQTT_TOPIC: mqtt_topic,
@@ -128,7 +128,7 @@ class GPlugEnergyConfigFlow(ConfigFlow, domain=DOMAIN):
                 self._abort_if_unique_id_configured()
 
                 return self.async_create_entry(
-                    title=f"gPlug – {device_name} (HTTP)",
+                    title=f"gPlugD – {device_name} (HTTP)",
                     data={
                         CONF_CONNECTION_TYPE: CONNECTION_HTTP,
                         CONF_HTTP_HOST: host,
@@ -167,7 +167,7 @@ class GPlugEnergyConfigFlow(ConfigFlow, domain=DOMAIN):
 
 
 class GPlugOptionsFlowHandler(OptionsFlow):
-    """Handle gPlug options."""
+    """Handle gPlugD options."""
 
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
@@ -207,6 +207,6 @@ class GPlugOptionsFlowHandler(OptionsFlow):
             step_id="init",
             data_schema=vol.Schema({}),
             description_placeholders={
-                "info": "MQTT configuration is managed via the gPlug web interface.",
+                "info": "MQTT configuration is managed via the gPlugD web interface.",
             },
         )

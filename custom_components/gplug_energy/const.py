@@ -1,4 +1,4 @@
-"""Constants for the gPlug Energy integration."""
+"""Constants for the gPlugD Energy integration."""
 
 DOMAIN = "gplug_energy"
 MANUFACTURER = "Gantrisch Energie AG"
@@ -20,8 +20,8 @@ DEFAULT_POLLING_INTERVAL = 10
 DEFAULT_DEVICE_NAME = "gPlugD"
 
 # ── OBIS-Code Sensor Mapping ──────────────────────────────────────────────
-# Maps gPlug Tasmota script variable names to human-readable sensor configs.
-# The gPlug Tasmota scripts use a JSON prefix (e.g. "ENERGY" or custom)
+# Maps gPlugD Tasmota script variable names to human-readable sensor configs.
+# The gPlugD Tasmota scripts use a JSON prefix (e.g. "ENERGY" or custom)
 # and publish values via MQTT in the format:
 #   tele/<topic>/SENSOR = {"Time":"...","ENERGY":{"Ei_1.8":1234.56,...}}
 #
@@ -195,7 +195,7 @@ SENSOR_TYPES_ENERGY = {
     },
 }
 
-# Alternative JSON keys used by some gPlug scripts (HDLC/DLMS variant)
+# Alternative JSON keys used by some gPlugD scripts (HDLC/DLMS variant)
 SENSOR_KEY_ALIASES = {
     "Total_in": "Ei_1.8",
     "Total_out": "Eo_2.8",
@@ -216,7 +216,7 @@ SENSOR_KEY_ALIASES = {
     "Power": "Pi_1.7",
     "Voltage": "V1_32.7",
     "Current": "I1_31.7",
-    # Short gPlug keys (as seen in real MQTT payloads)
+    # Short gPlugD keys (as seen in real MQTT payloads)
     "Pi": "Pi_1.7",
     "Po": "Po_2.7",
     "V1": "V1_32.7",
@@ -236,5 +236,5 @@ SENSOR_KEY_ALIASES = {
 # Keys to ignore (not useful as sensors)
 SENSOR_SKIP_KEYS = {"SMid", "Time"}
 
-# Known JSON prefixes used by gPlug Tasmota scripts
+# Known JSON prefixes used by gPlugD Tasmota scripts
 KNOWN_JSON_PREFIXES = ["ENERGY", "SML", "P1", "DSMR", "HDLC", "z"]

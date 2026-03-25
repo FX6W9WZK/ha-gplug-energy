@@ -1,4 +1,4 @@
-"""Diagnostics support for gPlug Energy."""
+"""Diagnostics support for gPlugD Energy."""
 
 from __future__ import annotations
 

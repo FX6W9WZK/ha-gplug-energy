@@ -1,6 +1,6 @@
 /**
- * gPlug Energy Card – Custom Lovelace Card
- * Auto-registered by the gPlug Energy integration.
+ * gPlugD Energy Card – Custom Lovelace Card
+ * Auto-registered by the gPlugD Energy integration.
  *
  * Shows real-time power flow, energy totals, and per-phase details.
  */
@@ -22,7 +22,7 @@ class GPlugEnergyCard extends HTMLElement {
       throw new Error("Please define entry_id or entity_prefix");
     }
     this._config = {
-      title: config.title || "gPlug Smart Meter",
+      title: config.title || "gPlugD Smart Meter",
       entity_prefix: config.entity_prefix || "",
       entry_id: config.entry_id || "",
       show_phases: config.show_phases !== false,
@@ -42,7 +42,7 @@ class GPlugEnergyCard extends HTMLElement {
 
   static getStubConfig() {
     return {
-      title: "gPlug Smart Meter",
+      title: "gPlugD Smart Meter",
       entity_prefix: "sensor.gplugd_",
       show_phases: true,
       show_export: true,
@@ -126,7 +126,7 @@ class GPlugEnergyCard extends HTMLElement {
         <div style="padding:16px 16px 8px">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
             <div style="font-size:16px;font-weight:500;color:${text1}">${this._config.title}</div>
-            <div style="font-size:11px;color:${text2}">gPlug Energy</div>
+            <div style="font-size:11px;color:${text2}">gPlugD Energy</div>
           </div>
 
           <!-- Power flow indicator -->
@@ -172,7 +172,7 @@ class GPlugEnergyCardEditor extends HTMLElement {
         <ha-textfield
           label="Title"
           id="title"
-          value="${this._config.title || "gPlug Smart Meter"}"
+          value="${this._config.title || "gPlugD Smart Meter"}"
         ></ha-textfield>
         <ha-textfield
           label="Entity prefix (e.g. sensor.gplugd_)"
@@ -222,13 +222,13 @@ customElements.define("gplug-energy-card-editor", GPlugEnergyCardEditor);
 window.customCards = window.customCards || [];
 window.customCards.push({
   type: "gplug-energy-card",
-  name: "gPlug Energy",
+  name: "gPlugD Energy",
   description: "Real-time smart meter overview with power flow, tariffs, and phase details.",
   preview: true,
   documentationURL: "https://github.com/FX6W9WZK/ha-gplug-energy",
 });
 
 console.info(
-  `%c gPlug Energy Card v${CARD_VERSION} `,
+  `%c gPlugD Energy Card v${CARD_VERSION} `,
   "background:#1D9E75;color:#fff;font-weight:bold;padding:2px 6px;border-radius:4px"
 );

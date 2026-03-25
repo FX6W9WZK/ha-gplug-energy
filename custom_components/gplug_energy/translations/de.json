@@ -2,23 +2,23 @@
   "config": {
     "step": {
       "user": {
-        "title": "gPlug Energy – Verbindung",
-        "description": "Wählen Sie die Verbindungsart zu Ihrem gPlug-Gerät.",
+        "title": "gPlugD Energy – Verbindung",
+        "description": "Wählen Sie die Verbindungsart zu Ihrem gPlugD-Gerät.",
         "data": {
           "connection_type": "Verbindungstyp"
         }
       },
       "mqtt": {
-        "title": "gPlug Energy – MQTT",
-        "description": "Geben Sie das MQTT Sensor-Topic Ihres gPlug ein.\nTypisch: tele/ihr-gplug-topic/SENSOR\nPrüfen Sie die gPlug Web-UI unter Information für das korrekte Topic.",
+        "title": "gPlugD Energy – MQTT",
+        "description": "Geben Sie das MQTT Sensor-Topic Ihres gPlugD ein.\nTypisch: tele/ihr-gplug-topic/SENSOR\nPrüfen Sie die gPlugD Web-UI unter Information für das korrekte Topic.",
         "data": {
           "device_name": "Gerätename",
           "mqtt_topic": "MQTT Sensor-Topic"
         }
       },
       "http": {
-        "title": "gPlug Energy – HTTP",
-        "description": "Geben Sie die IP-Adresse oder den Hostnamen Ihres gPlug-Geräts ein.",
+        "title": "gPlugD Energy – HTTP",
+        "description": "Geben Sie die IP-Adresse oder den Hostnamen Ihres gPlugD-Geräts ein.",
         "data": {
           "device_name": "Gerätename",
           "http_host": "IP-Adresse / Hostname",
@@ -31,13 +31,13 @@
       "invalid_host": "Bitte geben Sie eine gültige IP-Adresse oder einen Hostnamen ein."
     },
     "abort": {
-      "already_configured": "Dieses gPlug-Gerät ist bereits konfiguriert."
+      "already_configured": "Dieses gPlugD-Gerät ist bereits konfiguriert."
     }
   },
   "options": {
     "step": {
       "init": {
-        "title": "gPlug Energy – Optionen",
+        "title": "gPlugD Energy – Optionen",
         "data": {
           "polling_interval": "Abfrageintervall (Sekunden)"
         }

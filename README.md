@@ -1,4 +1,4 @@
-# gPlug Energy – Home Assistant Integration (HACS)
+# gPlugD Energy – Home Assistant Integration (HACS)
 
 [![HACS Badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz)
 [![Validate](https://github.com/FX6W9WZK/ha-gplug-energy/actions/workflows/validate.yml/badge.svg)](https://github.com/FX6W9WZK/ha-gplug-energy/actions)
@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/github/license/FX6W9WZK/ha-gplug-energy?color=yellow)](https://github.com/FX6W9WZK/ha-gplug-energy/blob/main/LICENSE)
 [![Built with Claude AI](https://img.shields.io/badge/Built%20with-Claude%20AI-cc785c?logo=anthropic&logoColor=white)](https://claude.ai)
 
-> Vollwertige Home Assistant Integration für [gPlug](https://gplug.ch/) Smart-Meter-Sensoren (gPlugD, gPlugD-E, gPlugE) mit direkter Anbindung an das Energy Dashboard.
+> Vollwertige Home Assistant Integration für [gPlugD](https://gplug.ch/) Smart-Meter-Sensoren (gPlugD, gPlugD-E, gPlugE) mit direkter Anbindung an das Energy Dashboard.
 
 ---
 
@@ -31,7 +31,7 @@
 
 1. **HACS** öffnen → **⋮** (oben rechts) → **Benutzerdefinierte Repositories**
 2. URL: `https://github.com/FX6W9WZK/ha-gplug-energy` · Kategorie: **Integration**
-3. **gPlug Energy** suchen → **Herunterladen**
+3. **gPlugD Energy** suchen → **Herunterladen**
 4. Home Assistant **neu starten**
 
 ### Manuell
@@ -44,16 +44,16 @@ Ordner `custom_components/gplug_energy/` nach `<config>/custom_components/` kopi
 
 ### Voraussetzung
 
-Der gPlugD muss per MQTT mit einem Broker verbunden sein (z.B. Mosquitto). Konfiguration über die gPlug Web-UI: **Einstellungen → MQTT**.
+Der gPlugD muss per MQTT mit einem Broker verbunden sein (z.B. Mosquitto). Konfiguration über die gPlugD Web-UI: **Einstellungen → MQTT**.
 
 ### Integration hinzufügen
 
 1. **Einstellungen → Geräte & Dienste → Integration hinzufügen**
-2. Nach **gPlug Energy** suchen
+2. Nach **gPlugD Energy** suchen
 3. **MQTT** wählen → MQTT-Topic eingeben (z.B. `tele/gPlugD_598E64/SENSOR`)
 4. Fertig – Sensoren erscheinen automatisch innerhalb weniger Sekunden
 
-Das Topic findest du in der gPlug Web-UI unter **Information** oder im MQTT Explorer.
+Das Topic findest du in der gPlugD Web-UI unter **Information** oder im MQTT Explorer.
 
 ---
 
@@ -109,13 +109,13 @@ Live-Dashboard / Lovelace (Momentanwerte)
 
 Die Karte `gplug-energy-card` wird **automatisch registriert** und erscheint im Karten-Picker.
 
-**Dashboard bearbeiten → Karte hinzufügen → „gPlug Energy" suchen**
+**Dashboard bearbeiten → Karte hinzufügen → „gPlugD Energy" suchen**
 
 Oder manuell als YAML:
 
 ```yaml
 type: custom:gplug-energy-card
-title: gPlug Smart Meter
+title: gPlugD Smart Meter
 entity_prefix: sensor.gplugd_
 show_phases: true
 show_export: true
@@ -148,7 +148,7 @@ Unbekannte Keys aus dem MQTT-Payload werden automatisch als generische Sensoren 
 
 ## MQTT-Payload-Formate
 
-Die Integration erkennt verschiedene JSON-Strukturen aus gPlug Tasmota-Scripts:
+Die Integration erkennt verschiedene JSON-Strukturen aus gPlugD Tasmota-Scripts:
 
 **gPlugD Standard** (Prefix `z`):
 ```json
@@ -218,7 +218,7 @@ utility_meter:
 ## Troubleshooting
 
 **Sensoren erscheinen nicht?**
-Prüfe mit MQTT Explorer, ob der gPlug auf dem konfigurierten Topic sendet. Stelle sicher, dass die native Tasmota-Integration nicht parallel dieselben Sensoren verwaltet.
+Prüfe mit MQTT Explorer, ob der gPlugD auf dem konfigurierten Topic sendet. Stelle sicher, dass die native Tasmota-Integration nicht parallel dieselben Sensoren verwaltet.
 
 **Sensoren nicht im Energy Dashboard sichtbar?**
 Unter Entwicklerwerkzeuge → Zustände prüfen, ob `device_class: energy`, `state_class: total_increasing` und `unit_of_measurement: kWh` gesetzt sind.
@@ -227,7 +227,7 @@ Unter Entwicklerwerkzeuge → Zustände prüfen, ob `device_class: energy`, `sta
 Manuell hinzufügen: Einstellungen → Dashboards → Ressourcen → Ressource hinzufügen → URL: `/gplug_energy/gplug-energy-card.js` → Typ: JavaScript-Modul.
 
 **MQTT-Verbindung prüfen:**
-In der gPlug Tasmota-Konsole `Status 6` eingeben.
+In der gPlugD Tasmota-Konsole `Status 6` eingeben.
 
 ---
 
@@ -242,7 +242,7 @@ Smart Meter ──RJ12──▸ gPlugD (ESP32-C3 / Tasmota)
                           │
                           │ Subscribe
                           ▼
-                  ┌─ gPlug Energy Integration ─┐
+                  ┌─ gPlugD Energy Integration ─┐
                   │                             │
                   │  Auto-Discovery             │
                   │  device_class / state_class  │
@@ -275,8 +275,8 @@ Siehe [CHANGELOG.md](CHANGELOG.md) für die komplette Versionshistorie.
 
 | | |
 |---|---|
-| **gPlug Produkte** | [gplug.ch/produkte](https://gplug.ch/produkte/) |
-| **gPlug Installationsanleitung** | [gplug.ch/installationsanleitung/gplugd](https://gplug.ch/installationsanleitung/gplugd/) |
+| **gPlugD Produkte** | [gplug.ch/produkte](https://gplug.ch/produkte/) |
+| **gPlugD Installationsanleitung** | [gplug.ch/installationsanleitung/gplugd](https://gplug.ch/installationsanleitung/gplugd/) |
 | **Tasmota Smart Meter Interface** | [tasmota.github.io/docs/Smart-Meter-Interface](https://tasmota.github.io/docs/Smart-Meter-Interface/) |
 | **Tasmota MQTT** | [tasmota.github.io/docs/MQTT](https://tasmota.github.io/docs/MQTT/) |
 | **HA Energy Dashboard FAQ** | [home-assistant.io/docs/energy/faq](https://www.home-assistant.io/docs/energy/faq/) |
