@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/github/license/FX6W9WZK/ha-gPlug-energy?color=yellow)](https://github.com/FX6W9WZK/ha-gPlug-energy/blob/main/LICENSE)
 [![Built with Claude AI](https://img.shields.io/badge/Built%20with-Claude%20AI-cc785c?logo=anthropic&logoColor=white)](https://claude.ai)
 
-> Vollwertige Home Assistant Integration für alle [gPlug](https://gplug.ch/) Smart-Meter-Sensoren (gPlugD, gPlugD-E, gPlugK, gPlugM) mit direkter Anbindung an das Energy Dashboard.
+> Vollwertige Home Assistant Integration für alle gPlug Smart-Meter-Sensoren (gPlugD, gPlugD-E, gPlugK, gPlugM) mit direkter Anbindung an das Energy Dashboard.
 
 ---
 
@@ -31,10 +31,10 @@ Die Integration unterstützt **alle aktuellen gPlug Produkte**. Das Gerätemodel
 
 | Produkt | Smart Meter | Schnittstelle | Anbindung |
 |---------|------------|---------------|-----------|
-| **[gPlugD](https://gplug.ch/produkte/gplugd/)** | Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy | P1-DSMR (RJ12) | WiFi 2.4 GHz |
-| **[gPlugD-E](https://gplug.ch/produkte/gplugd-e/)** | Gleich wie gPlugD | P1-DSMR (RJ12) | Ethernet + WiFi |
-| **[gPlugK](https://gplug.ch/produkte/gplugk/)** | Kamstrup Omnipower | Kamstrup HAN | WiFi 2.4 GHz |
-| **[gPlugM](https://gplug.ch/produkte/gplugm/)** | L+G E450 | M-Bus (RJ12) | WiFi 2.4 GHz |
+| **gPlugD** | Elster AS3000, Ensor eRS801, L&G E360, Sagemcom XT211, ISKRA AM550, NES Gen-5, M+C Flexy | P1-DSMR (RJ12) | WiFi 2.4 GHz |
+| **gPlugD-E** | Gleich wie gPlugD | P1-DSMR (RJ12) | Ethernet + WiFi |
+| **gPlugK** | Kamstrup Omnipower | Kamstrup HAN | WiFi 2.4 GHz |
+| **gPlugM** | L+G E450 | M-Bus (RJ12) | WiFi 2.4 GHz |
 
 Alle Produkte verwenden die Firmware **Tasmota** und publizieren Sensordaten im gleichen JSON-Format via **MQTT**. Die Integration erkennt automatisch alle Sensor-Keys – unabhängig davon welches gPlug Modell verwendet wird.
 
@@ -300,8 +300,6 @@ Siehe [CHANGELOG.md](CHANGELOG.md) für die komplette Versionshistorie.
 
 | | |
 |---|---|
-| **gPlug Produkte** | [gplug.ch/produkte](https://gplug.ch/produkte/) |
-| **gPlug Installationsanleitung** | [gplug.ch/installationsanleitung/gplugd](https://gplug.ch/installationsanleitung/gplugd/) |
 | **Tasmota Smart Meter Interface** | [tasmota.github.io/docs/Smart-Meter-Interface](https://tasmota.github.io/docs/Smart-Meter-Interface/) |
 | **Tasmota MQTT** | [tasmota.github.io/docs/MQTT](https://tasmota.github.io/docs/MQTT/) |
 | **HA Energy Dashboard FAQ** | [home-assistant.io/docs/energy/faq](https://www.home-assistant.io/docs/energy/faq/) |
